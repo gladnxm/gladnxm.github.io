@@ -1,0 +1,17 @@
+<!doctype html> <!--globalAttr.html-->
+<html lang="ko">
+  <head>
+    <meta charset="utf-8"/>
+    <style>
+      body.user_class_1 {font-style:italic;}
+      p#user_id_1 {color:red;}
+      p#user_id_2 {color:green;}
+    </style>
+    <title>타이틀표제</title>
+  </head>
+  <body class="user_class_1">
+    <h1 style="color:blue;">애국가</h1>
+    <p id="user_id_1">동해물과 백두산이</p>
+    <p id="user_id_2">마르고 닳도록</p>
+  </body>
+</html>
