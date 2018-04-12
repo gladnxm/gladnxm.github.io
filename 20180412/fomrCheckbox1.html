@@ -1,15 +1,16 @@
-<!doctype html> <!-- fomrSearch1.html --> 
+<!doctype html> <!-- fomrRadio1.html --> 
 <html><head><meta charset="utf-8"/> 
 <meta name="viewport"content="width=device-width,initial-scale=1"/>
 <title>폼학습</title></head> 
 <body>
 <section>
-<form action="http://hive.dju.ac.kr/~drkdhong/html5/formSearch1.jsp"method="post">
+<form action="http://jsp.dju.ac.kr/~kdhongx/ex/formRadio1.jsp"method="post">
 <fieldset>
-<legend>정보 검색</legend>
-  <label for="searchx">검색단어:</label>
-  <input type="search "id="searchx" name="searchKeyword" placeholder="검색어 입력"/>
-  <button type="submit">조회</button>
-  <input type="reset" name="reset1" value="취소"/>
+<legend>성별 선택</legend>
+  <label for="malex">남자</label>
+  <input type="radio" id="malex" name="gender" valuer="male" checked/>
+  <label for="femalex">여자</label>
+  <input type="radio" id="femalex" name="gender" valuer="female"/>
+  <button type="submit">등록</button>
 </fieldset></form></section>
 </body></html>
