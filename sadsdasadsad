@@ -11,6 +11,7 @@
   <input type="text" id="namex" name="namex"/></br>
   <label for="numberx">휴대전화:</label>
   <input type="tel" id="numberx" name="numberx" placeholder=="00*-000*-0000" pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"/><br/>
+  <label for=>
 </textarea>
  <button type="submit">등록</button>
 <input type="reset" value="취소">
