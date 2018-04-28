@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+ <head>
+   <meta charset="utf-8"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+   <title>음식점 예약화면</title>
+ </head>
+ <body>
+   <section>
+     <form action="http://jsp.dju.ac.kr/~kdhongx/ex/reservation1.jsp" method="post">
+       <fieldset>
+        <legend>예약자 정보</legend>
+         <label for="datex">이름:</label>
+           <input type="text" id="namex" name="namex"/><br/>
+         <label for="numberx">휴대전화:</label>
+           <input type="tel" id="numberx" name="numberx" placeholder="00*-000*-0000" 
+            pattern="[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}"/><br/>
+         <label for="personx">인원:</label>
+           <input type="number" id="personx" name="personx" min="1" step="1"/>
+      </fieldset>
+      <fieldset>
+       <legend>약속 날짜 시간 입력</legend>
+          <label for="datex">날짜:</label>
+           <input type="date" id="datex" name="datex"/><br/>
+          <label for="timex">시간:</label>
+           <input type="time" id="times" name="timex"/><br/>
+      </fieldset>
+        <button type="submit">입력</button>
+           <input type="reset" name="reset1" value="취소"/>
+   </form>
+ </section>
+</body></html>
