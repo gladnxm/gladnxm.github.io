@@ -1,0 +1,21 @@
+<!doctype html> <!-- cssDisp1.html -->
+<html lang="ko">
+ <head>
+   <meta charset="utf-8"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+<style>
+.ordinary { border:1px solid black;}
+.dispinline { display:inline; border:1px solid black;}
+.dispblock { display:block; border:1px solid black;}
+.dispinlineblock { display:inline-block; border:1px solid black; width:150px; height:50px;}
+</style>
+<title>css display/visibility 실습</title></head><body><section>
+<h4>1.블록레벨 엘리먼트 p의 inline적용</h4>
+<p class="ordinary">(블록 엘리먼트p)동해물과 백두산이</p>
+<p class="ordinary">(블록 엘리먼트p)무궁화 삼천리</p>
+<p class="dispinline">(inline으로 변경)동해물과 백두산이</p>
+<p class="dispinline">(inline으로 변경)무궁화 삼천리</p>
+<h4>2.인라인 엘리먼트 span의 block적용</h4>
+<p>동해물과 백두산이<span>(span)마르고</span>닳도록</p>
+<p>동해물과 백두산이<span class="dispblock">(span을 block으로 변경)
+113쪽
