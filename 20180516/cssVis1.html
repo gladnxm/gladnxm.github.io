@@ -4,24 +4,42 @@
    <meta charset="utf-8"/>
    <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <style>
-.dispinline { display:inline; border:1px solid black;}
-.dispnone { display:none;} 
-  
-  
+.dispinline { display:inline; border:1px solid black; }
+.dispnone { display:none; }
+.vishidden { visibility:hidden; }
+table, tr, th, td { border:1px solid black; border-collapse:collapse; }
+tr.collapse { visibility:collapse; }
 </style>
-<title>css display/visibility 실습</title></head><body><section>
-<h4>1.블록레벨 엘리먼트 p의 inline적용</h4>
-<p class="ordinary">(블록 엘리먼트p)동해물과 백두산이</p>
-<p class="ordinary">(블록 엘리먼트p)무궁화 삼천리</p>
-<p class="dispinline">(inline으로 변경)동해물과 백두산이</p>
-<p class="dispinline">(inline으로 변경)무궁화 삼천리</p>
-<h4>2.인라인 엘리먼트 span의 block적용</h4>
-<p>동해물과 백두산이<span>(span)마르고</span>닳도록</p>
-<p>동해물과 백두산이<span class="dispblock">(span을 block으로 변경)마르고</span>닳도록<p>
-<h4>3.인라인 엘리먼트 span의 inline-block적용</h4>
-<p>동해물과 백두산이<span>(span)마르고</span>닳도록</p>
-<p>동해물과 백두산이<span class="dispinlineblock">(span을 inline-block으로 변경)마르고</span>닳도록<p>
-<h4>3.블록레벨 엘리먼트 li의 inline 적용</h4>
-<ul><li>로그인</li><li>회원가입</li><li>사이트맵</li></ul>
-<ul><li class="dispinline">로그인|</li><li class="dispinline">회원가입|</li><li class="dispinline">사이트맵</li></ul>
-</section></body></html>
+<title>CSS display/visibility 실습</title>
+</head><body><section>
+ 
+<h4>1.리스트 아이템 '회원관리' 삭제 display=none</h4>
+<ul>
+<li class="dispinline">로그인|</li>
+<li class="dispnone">회원가입|</li>
+<li class="dispinline">사이트맵</li>
+</ul>
+ 
+<h4>2.리스트 아이템 '회원관리' 숨기기 display=inline, visibility=hidden</h4>
+<ul>
+<li class="dispinline">로그인|</li>
+<li class="dispinline vishidden">회원가입|</li>
+<li class="dispinline">사이트맵</li>
+</ul>
+</section>
+<section>
+ 
+<h4>3.보통 테이블</h4>
+<table>
+<tr><td>홍길동</td><td>이몽룡</td></tr>
+<tr><td>성춘향</td><td>변사또</td></tr>
+</table>
+</section>
+<section>
+ 
+<h4>4.테이블에서 아래 row삭제, collapse, visibility=collapse</h4>
+<table>
+<tr><td>홍길동</td><td>이몽룡</td></tr>
+<tr class="collapse"><td>성춘향</td><td>변사또</td></tr>
+</table></section></body>
+</html>
