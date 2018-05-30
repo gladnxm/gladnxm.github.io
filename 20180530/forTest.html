@@ -1,0 +1,28 @@
+<!doctype html> <!-- .html -->
+<html>
+<head>
+<meta charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="../css/sample.css"/>
+<script src="../js/sample.js"></script>
+<title>웹 프로그래밍 실습</title></head>
+<body><header><h2>실습 대환영</h2></header>
+<nav><ul><li><a href="http://hive.dj.ac.kr">실습서버</a></li></ul></nav>
+<section><h4>for 예제 실습</h4>
+<script>
+var namex=["홍길동", "이몽룡", "변학도", "손오공", "저팔계"];
+for(var i=0; i<namex.length; i++)
+{document.write(namex[i], "<br/>")}
+var sum=0;
+var datax=[10,13,15,17,29,11,13,14,21,34];
+for(var i=0; i<datax.length; i++)
+sum=sum+datax[i];
+document.write("for합계=",sum,"<br/>");
+var sum=0;
+for(var i in datax)
+sum=sum+datax[i];
+document.write("for in 합계=",sum,"<br/>");
+</script></section>
+<footer><p>&copy; 20XX Made by Korea. All rights reserved. 
+</p></footer></body></html>
