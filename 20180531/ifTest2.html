@@ -1,0 +1,26 @@
+<!doctype html> <!-- ifTest2.html -->
+<html>
+<head>
+<meta charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="../css/sample.css"/>
+<script src="../js/sample.js"></script>
+<title>웹 프로그래밍 실습</title></head>
+<body><header><h2>실습 대환영</h2></header>
+<nav><ul><li><a href="http://hive.dj.ac.kr">실습서버</a></li></ul></nav>
+<section><h4>연산자 예제 실습</h4>
+<script>
+var score=window.prompt("점수입력:");
+score=parseFloat(score);
+var grade=undefined;
+
+if(score>=90){grade="A";}
+else if(score>=80){grade="B";}
+else if(score>=70){grade="C";}
+else{grade="F";}
+
+document.write("grade=", grade, "<br/>");
+</script></section>
+<footer><p>&copy; 20XX Made by Korea. All rights reserved. 
+</p></footer></body></html>
