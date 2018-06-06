@@ -9,16 +9,17 @@
 <title>웹 프로그래밍 실습</title></head>
 <body><header><h2>실습 대환영</h2></header>
 <nav><ul><li><a href="http://hive.dj.ac.kr">실습서버</a></li></ul></nav>
-<section><h4>연산자 예제 실습</h4>
+<section><h4>평균 구하기</h4>
 
 
 <script>
 
 var sum=0; 
-var num=window.prompt("몇명?:");
+var score=0;
+var num=window.prompt("몇명?");
 num=parseFloat(num);
-for(var i=0; i<num i++)
-{var score=window.prompt(i+1, "번째 학생 점수:");
+for(var i=0; i<num; i++)
+{score=window.prompt(i+1, "번째 학생 점수:");
 score=parseFloat(score);
 sum=sum+score;}
 var average=sum/num;
