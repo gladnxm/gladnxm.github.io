@@ -1,3 +1,12 @@
+<!doctype html> <!-- ifTest2.html -->
+<html lang="ko">
+<head>
+<meta charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="../20180524/sample.css"/>
+<script src="../js/sample.js"></script><script>
+
 function fnGetElementsByDOM(){
 var accessTag=window.document,form_name1.input_name1;
 console.log(accessTag);
