@@ -1,0 +1,31 @@
+<!doctype html> <!-- getElementByname.html -->
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="../20180524/sample.css"/>
+<script>
+function fnGetElementsByName()
+{var accessTag = document.getElementsByName("input_name1")[0];
+console.log(accessTag.tagName);
+accessTag.setAttribute("value", "getElementsByName실행!");}
+</script>
+<title>웹 프로그래밍 실습</title>
+</head><body><header>
+<h2>HTML DOM실습을 환영합니다</h2>
+</header>
+<nav><ul>
+<li><a href="http://~kdhong.ac.kr">실습서버</a></li>
+</ul></nav>
+<section id="login">
+<h4>자바 스크립트 실행</h4>
+<form id="form_id1" name="form_name1">
+<input id="input_id1" type="text" name="input_name1" size="30"/>
+<input id="button_id1" type="button" name="user_id" value="입력"/><br/>
+빈칸에 검색어를 넣고 입력해 주세요.
+</form><form>
+<input type="button" onclick="fnGetElementsByName();" value="변경실행"/>
+</form></section><footer>
+<p>&copy; 20XX Made by Korea. All rights reserved.</p>
+</footer></body></html>
