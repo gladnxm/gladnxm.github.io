@@ -1,0 +1,31 @@
+<!doctype html> <!-- windowPrompt.html -->
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="../20180524/sample.css"/>
+<script src="../js/sample.js"></script>
+<title>웹 프로그래밍 실습</title>
+</head><body><header>
+<h2>실습 대환영</h2>
+</header>
+<nav><ul>
+<li><a href="http://~kdhong.ac.kr">실습서버</a></li>
+</ul></nav><section>
+<h4>function 예제 실습</h4>
+<script>
+var num1=window.prompt("num1 점수 입력:");
+var num2=window.prompt("num2 점수 입력:");
+num1=parseFloat(num1);
+num2=parseFloat(num2);
+function sumx(num1, num2)
+{
+var result=num1+num2;
+return result;
+}
+var value=sumx(num1,num2);
+document.write("value=", value,"<br/>");
+</script></section><footer>
+<p>&copy; 20XX Made by Korea. All rights reserved.</p>
+</footer></body></html>
