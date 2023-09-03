@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import './style/App.module.scss'
+import './style/App.scss'
 import AllMenu from './AllMenu.js'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCartShopping, faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
 
 function App() {
   const [showingMenu, setShowingMenu] = useState(AllMenu.cocktail)
@@ -13,18 +15,24 @@ function App() {
       <button onClick={()=>setShowingMenu(AllMenu.wine)}>와인</button>
       <button onClick={()=>setShowingMenu(AllMenu.whiskey)}>위스키</button>
       <button onClick={()=>setShowingMenu(AllMenu.dish)}>안주</button>
-      <div>Table {tableNum + 1}</div>
+      <p>Table {tableNum + 1}</p>
     </header>
     {
       showingMenu.map(el=>{
         return (
           //key 없으면 에러
-          <div key={el.id}>  
-            <p>{el.title}</p>
-            <p>{el.alc ? el.alc + '%' : ''}</p>
-            <p>{el.price}</p>
-            <button>자세히</button>
-            <button>담기</button>
+          <div className={'item1'} key={el.id}>  
+            <span>{el.title}</span>
+            <span>{el.alc ? el.alc + '%' : ''}</span>
+            <span>{'￦' + el.price}</span>
+            <FontAwesomeIcon 
+              icon={faMagnifyingGlassPlus} 
+              onClick={()=>console.log('2132')}
+            />
+            <FontAwesomeIcon 
+              icon={faCartShopping} 
+              onClick={()=>console.log('aasds')}
+            />
           </div>
         )
       })
