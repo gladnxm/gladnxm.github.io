@@ -1,29 +1,27 @@
-import { useState } from "react"
-import { useSelector } from "react-redux"
+/* eslint-disable react/prop-types */
+// import { useSelector } from "react-redux"
 import '../style/Detail.scss'
+import { useNavigate } from "react-router-dom"
 
-function Detail(props) {
-  const [count, setCount] = useState(0)
-  let clicked = useSelector(state => state.clickedItem)
-  console.log(clicked)
+function Detail({item, setShowDetail}) {
+  const navigate = useNavigate()
+  const comment = []
   return (
     <div className="detail">
       <img src="https://i1.sndcdn.com/avatars-000290569641-i7c4xl-t240x240.jpg" alt="" />
-      <p>{clicked.title}</p>
-      <p>{clicked.alc}</p>
-      <p>{clicked.explanation}</p>
-      <div className="control">
-        <button onClick={()=> (count > 0) && setCount(prev=>prev-1)}>-</button>
-        <span >{count}</span>
-        <button onClick={()=>setCount(prev=>prev+1)}>+</button>
+      <div className="info">
+        <p>{item.title}</p>
+        <p>{item.alc ? `알코올 ${item.alc}%` : ''}</p>
+        <p>{'￦' + item.price}</p>
+        <p>{item.explanation}</p>
       </div>
-      <footer>
-        <button>주문내역</button>
-        <button>장바구니</button>
-      </footer>
-    </div>
-    
+      {
+        comment.map(el=>{
+          <p>댓글 여기서 쫙 보여줄 예정</p>
+        })
+      }      
+      <button onClick={()=>setShowDetail(prev=>!prev)}>닫기</button>
+    </div>    
   )
 }
-
 export default Detail

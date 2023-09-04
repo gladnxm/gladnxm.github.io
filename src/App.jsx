@@ -1,74 +1,89 @@
 import { useState } from 'react'
-import './style/App.scss'
-import AllMenu from './AllMenu.js'
+import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
-import { Route, Routes, Link, Outlet, useNavigate } from 'react-router-dom'
+import { Route, Routes, Link, Outlet, useNavigate, useParams } from 'react-router-dom'
+
+import { addItemInCart } from './store.js';
+import './style/App.scss'
+import AllMenu from './AllMenu.js'
 import Detail from './pages/Detail.jsx'
-import { changeClickedItem } from './store.js';
-import { useDispatch } from 'react-redux';
+import OrderList from './pages/OrderList.jsx';
+import Cart from './pages/Cart.jsx'
 
 function Home() {
-  const navigate = useNavigate()
+  let { tableNumber } = useParams()
+  tableNumber = parseInt(tableNumber)
   const dispatch = useDispatch()
   const [currentCategory, setCurrentCategory] = useState('cocktail')
-  const tableNum = 0
-
+  const [showDetail, setShowDetail] = useState(false)
+  let [selected, setSelected] = useState(null) //state아닌 일반변수로 하면 작동안함
+  
   return (
     <>
-    <header>
+    <nav>
       <button onClick={()=>setCurrentCategory('cocktail')}>칵테일</button>
       <button onClick={()=>setCurrentCategory('beer')}>맥주</button>
       <button onClick={()=>setCurrentCategory('wine')}>와인</button>
       <button onClick={()=>setCurrentCategory('whiskey')}>위스키</button>
       <button onClick={()=>setCurrentCategory('dish')}>안주</button>
-      <p>Table {tableNum + 1}</p>
-    </header>
+      <p>Table {tableNumber + 1}</p>
+    </nav>
     {
-      AllMenu[currentCategory].map((el, i) => {
+      AllMenu[currentCategory].map(item => {
         return (
-          //key 없으면 에러
-          <div className={'item'} key={el.id}>  
-            <span>{el.title}</span>
-            <span>{el.alc ? el.alc + '%' : ''}</span>
-            <span>{'￦' + el.price}</span>
+          <div className='home item' key={item.id}>  
+            <span>{item.title}</span>
+            <span>{item.alc && item.alc + '%'}</span>
+            <span>{'￦' + item.price}</span>
             <FontAwesomeIcon
               className='icon' 
               icon={faMagnifyingGlassPlus} 
               onClick={()=>{
-                dispatch(changeClickedItem({currentCategory, i}))
-                navigate('/detail')
+                // dispatch(changeClickedItem({currentCategory, title: item.title}))
+                setSelected(item)
+                setShowDetail(prev=>!prev)
               }}
             />
             <FontAwesomeIcon 
               className='icon' 
               icon={faCartShopping} 
-              onClick={()=>navigate('/cart')}
+              onClick={()=>{
+                const item = {
+                  id: item.id,
+                  title: item.title,
+                  alc: item.alc,
+                  price: item.price,
+                  count: 1,
+                }
+                dispatch(addItemInCart({item, tableNumber}))
+                alert('장바구니에 담겼습니다 1초후에 닫히는거로 개선할예정')
+              }}
             />
           </div>
         )
       })
     }
     <footer>
-      <button>주문내역</button>
-      <button>장바구니</button>
+      <Link to={`/${tableNumber}/orderList`}>주문내역</Link>
+      <Link to={`/${tableNumber}/cart`}>장바구니</Link>
     </footer>
+    {
+      showDetail && <Detail item={selected} setShowDetail={setShowDetail} />
+    }
     </>
   )
 } 
 
 function App() {
-
   return (
     <>
     <Routes>
-      <Route path='/' element={<Home />} />
-      <Route path='/detail' element={<Detail />} />
+      <Route path='/:tableNumber' element={<Home />} />
+      <Route path='/:tableNumber/cart' element={<Cart />} />
+      <Route path='/:tableNumber/orderList' element={<OrderList />} />
     </Routes>
-
-    
     </>
   )
 }
-
 export default App
