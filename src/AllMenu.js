@@ -26,6 +26,76 @@ const cocktail = [
     alc : 15,
     price : 11000,
     explanation: '깔루아에대한 설명'
+  },
+  {
+    id : 4,
+    title : "진토닉",
+    alc : 9,
+    price : 8000,
+    explanation: '진토닉에대한 설명'
+  },
+  {
+    id : 5,
+    title : "옥보단",
+    alc : 17,
+    price : 9000,
+    explanation: '옥보단에대한 설명'
+  },
+  {
+    id : 6,
+    title : "블랙러시안",
+    alc : 40,
+    price : 13000,
+    explanation: '러시안에대한 설명'
+  },
+  {
+    id : 7,
+    title : "애플마니티",
+    alc : 35,
+    price : 15000,
+    explanation: '애플마니티에대한 설명'
+  },
+  {
+    id : 8,
+    title : "우우",
+    alc : 5,
+    price : 7000,
+    explanation: '우우에대한 설명'
+  },
+  {
+    id : 9,
+    title : "아이스민트",
+    alc : 50,
+    price : 3000,
+    explanation: '민트에대한 설명'
+  },
+  {
+    id : 10,
+    title : "블랙홀",
+    alc : 50,
+    price : 16000,
+    explanation: '블랙홀에대한 설명'
+  },
+  {
+    id : 11,
+    title : "페니실린",
+    alc : 30,
+    price : 10000,
+    explanation: '페니실린에대한 설명'
+  },
+  {
+    id : 12,
+    title : "라모스진피즈",
+    alc : 12,
+    price : 13000,
+    explanation: '진피즈에대한 설명'
+  },
+  {
+    id : 13,
+    title : "데드",
+    alc : 40,
+    price : 12000,
+    explanation: '데드에대한 설명'
   }
 ]
 

@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
 import { Route, Routes, Link, Outlet, useNavigate, useParams } from 'react-router-dom'
 
-import { addItemInCart } from './store.js';
 import './style/App.scss'
+import { addItemInCart } from './store.js';
 import AllMenu from './AllMenu.js'
 import Detail from './components/Detail.jsx'
 import OrderList from './pages/OrderList.jsx';
@@ -21,7 +21,7 @@ function Home() {
   
   return (
     <>
-    <nav>
+    <nav className='home nav'>
       <button onClick={()=>setCurrentCategory('cocktail')}>칵테일</button>
       <button onClick={()=>setCurrentCategory('beer')}>맥주</button>
       <button onClick={()=>setCurrentCategory('wine')}>와인</button>
@@ -32,12 +32,12 @@ function Home() {
     {
       AllMenu[currentCategory].map(item => {
         return (
-          <div className='home-item' key={item.id}>  
+          <div className='home item' key={item.id}>  
             <span>{item.title}</span>
             <span>{item.alc && item.alc + '%'}</span>
             <span>{'￦' + item.price}</span>
             <FontAwesomeIcon
-              className='icon' 
+              className='home icon' 
               icon={faMagnifyingGlassPlus} 
               onClick={()=>{
                 setSelected(item)
@@ -45,7 +45,7 @@ function Home() {
               }}
             />
             <FontAwesomeIcon 
-              className='icon' 
+              className='home icon' 
               icon={faCartShopping} 
               onClick={()=>{
                 const temp = {
@@ -63,7 +63,7 @@ function Home() {
         )
       })
     }
-    <footer>
+    <footer className='home footer'>
       <Link to={`/${tableNumber}/orderList`}>주문내역</Link>
       <Link to={`/${tableNumber}/cart`}>장바구니</Link>
     </footer>

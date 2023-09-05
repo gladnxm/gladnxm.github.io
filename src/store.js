@@ -10,8 +10,16 @@ const cart = createSlice({
       alert('장바구니에 담겼습니다 .5초후에 팝업창 사라지는거로 개선예정')
       const { item, tableNumber } = action.payload
       const exist = state[tableNumber].find(el=>el.title === item.title)
-      exist ? exist.count++ : state[tableNumber].push(item)
-      // 이미 담긴 품목 또 담으면 개수만 늘어남
+      const existIndex = state[tableNumber].findIndex(el=>el.title === item.title)
+      if (exist) {
+        state[tableNumber][existIndex] = {
+          ...exist,
+          count: exist.count+1,
+          totalPrice: exist.pricePerPiece * (exist.count+1)
+        }          
+      } else {
+        state[tableNumber].push(item)
+      }
     },
     plusCount(state, action) {
       const { item, tableNumber } = action.payload
