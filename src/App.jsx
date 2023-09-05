@@ -32,7 +32,7 @@ function Home() {
     {
       AllMenu[currentCategory].map(item => {
         return (
-          <div className='home item' key={item.id}>  
+          <div className='home-item' key={item.id}>  
             <span>{item.title}</span>
             <span>{item.alc && item.alc + '%'}</span>
             <span>{'￦' + item.price}</span>

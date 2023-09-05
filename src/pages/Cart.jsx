@@ -7,7 +7,7 @@ import { plusCount, minusCount, removeItem } from '../store.js'
 function Item({item, tableNumber}) {
   const dispatch = useDispatch()
   return (
-    <div className='item'>  
+    <div className='cart-item'>  
       <span>{item.title}</span>
       <span>{item.alc && item.alc + '%'}</span>
       <span>{'￦' + item.totalPrice}</span>
@@ -16,7 +16,7 @@ function Item({item, tableNumber}) {
         <span>{item.count}</span>
         <button onClick={() => dispatch(plusCount({item,tableNumber}))}>+</button>
       </div>
-      <span onClick={() => dispatch(removeItem(item.title))}>X</span>
+      <button onClick={() => dispatch(removeItem({item,tableNumber}))}>X</button>
     </div>
   )
 }
@@ -26,9 +26,16 @@ function Cart() {
   tableNumber = parseInt(tableNumber)
   const navigate = useNavigate()
   const cart = useSelector(state => state.cart[tableNumber])
-  console.log(cart)
+
   return (
     <>   
+      <header>
+        <span>이름</span>
+        <span>도수</span>
+        <span>가격</span>
+        <span>수량</span>
+        <span>삭제</span>
+      </header>
       {
         cart.map((item, i) => <Item item={item} tableNumber={tableNumber} key={i} />)
       }

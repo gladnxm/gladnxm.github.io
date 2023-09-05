@@ -11,10 +11,9 @@ const cart = createSlice({
       const { item, tableNumber } = action.payload
       const exist = state[tableNumber].find(el=>el.title === item.title)
       exist ? exist.count++ : state[tableNumber].push(item)
+      // 이미 담긴 품목 또 담으면 개수만 늘어남
     },
-    // 이미담긴품목 담으면 개수만 늘어나야함 지금은 똑같은거 2 3개 됨
     plusCount(state, action) {
-      // console.log(action.payload)
       const { item, tableNumber } = action.payload
       const exist = state[tableNumber].find(el=>el.title === item.title)
       const existIndex = state[tableNumber].findIndex(el=>el.title === item.title)
@@ -27,8 +26,8 @@ const cart = createSlice({
     minusCount(state, action) {
       const { item, tableNumber } = action.payload
       const exist = state[tableNumber].find(el=>el.title === item.title)
-      const existIndex = state[tableNumber].findIndex(el=>el.title === item.title)
       if(exist.count <= 1) return
+      const existIndex = state[tableNumber].findIndex(el=>el.title === item.title)
       state[tableNumber][existIndex] = {
         ...exist,
         count: exist.count-1,
@@ -36,11 +35,11 @@ const cart = createSlice({
       }      
     },
     removeItem(state, action) {
-
-    },
-    // calculatePrice(state, action) {
-
-    // }
+      const { item, tableNumber } = action.payload
+      console.log(state[tableNumber])
+      const removeIndex = state[tableNumber].findIndex(el=>el.title === item.title)
+      state[tableNumber].splice(removeIndex, 1)
+    }
   }
 })
 export const { addItemInCart, plusCount, minusCount, removeItem } = cart.actions
