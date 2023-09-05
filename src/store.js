@@ -44,7 +44,6 @@ const cart = createSlice({
     },
     removeItem(state, action) {
       const { item, tableNumber } = action.payload
-      console.log(state[tableNumber])
       const removeIndex = state[tableNumber].findIndex(el=>el.title === item.title)
       state[tableNumber].splice(removeIndex, 1)
     }
@@ -64,8 +63,8 @@ const orderStatus = createSlice({ // 주문현황
 })
 /*
 손님이 주문하면 새주문내역이 만들어짐 
-주문현황에 먼저 반영되고 이후에 주문목록에 추가되는데
-겹치는거있으면 수량만 늘어나는 식으로
+주문판에 먼저 반영되고 이후에 주문목록에 추가되는데
+겹치는 품목은 개수만 늘어나는 식으로
 */
 
 export default configureStore({

@@ -9,6 +9,7 @@ import { addItemInCart } from './store.js';
 import AllMenu from './AllMenu.js'
 import Detail from './components/Detail.jsx'
 import OrderList from './pages/OrderList.jsx';
+import OrderStatus from './pages/OrderStatus';
 import Cart from './pages/Cart.jsx'
 
 function Home() {
@@ -81,6 +82,7 @@ function App() {
       <Route path='/:tableNumber' element={<Home />} />
       <Route path='/:tableNumber/cart' element={<Cart />} />
       <Route path='/:tableNumber/orderList' element={<OrderList />} />
+      <Route path='/admin' element={<OrderStatus />} />
     </Routes>
     </>
   )
