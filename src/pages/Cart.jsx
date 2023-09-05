@@ -4,18 +4,17 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 import { plusCount, minusCount, removeItem } from '../store.js'
 
-function Item(props) {
-  const item = props.item
+function Item({item, tableNumber}) {
   const dispatch = useDispatch()
   return (
     <div className='item'>  
       <span>{item.title}</span>
       <span>{item.alc && item.alc + '%'}</span>
-      <span>{'￦' + item.price}</span>
+      <span>{'￦' + item.totalPrice}</span>
       <div className="control">
-        <button onClick={() => dispatch(minusCount(item.title))}>-</button>
-        <span >{item.count}</span>
-        <button onClick={() => dispatch(plusCount(item.title))}>+</button>
+        <button onClick={() => dispatch(minusCount({item,tableNumber}))}>-</button>
+        <span>{item.count}</span>
+        <button onClick={() => dispatch(plusCount({item,tableNumber}))}>+</button>
       </div>
       <span onClick={() => dispatch(removeItem(item.title))}>X</span>
     </div>
@@ -24,14 +23,14 @@ function Item(props) {
 
 function Cart() {
   let { tableNumber } = useParams()
-  const navigate = useNavigate()
   tableNumber = parseInt(tableNumber)
+  const navigate = useNavigate()
   const cart = useSelector(state => state.cart[tableNumber])
   console.log(cart)
   return (
     <>   
       {
-        cart.map((item, i) => <Item item={item} key={i} />)
+        cart.map((item, i) => <Item item={item} tableNumber={tableNumber} key={i} />)
       }
       {
         // cart.reducer()

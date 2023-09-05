@@ -1,11 +1,9 @@
 /* eslint-disable react/prop-types */
-// import { useSelector } from "react-redux"
 import '../style/Detail.scss'
-import { useNavigate } from "react-router-dom"
 
-function Detail({item, setShowDetail}) {
-  const navigate = useNavigate()
+function Detail({ item, setShowDetail }) {
   const comment = []
+
   return (
     <div className="detail">
       <img src="https://i1.sndcdn.com/avatars-000290569641-i7c4xl-t240x240.jpg" alt="" />

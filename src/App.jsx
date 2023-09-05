@@ -7,7 +7,7 @@ import { Route, Routes, Link, Outlet, useNavigate, useParams } from 'react-route
 import { addItemInCart } from './store.js';
 import './style/App.scss'
 import AllMenu from './AllMenu.js'
-import Detail from './pages/Detail.jsx'
+import Detail from './components/Detail.jsx'
 import OrderList from './pages/OrderList.jsx';
 import Cart from './pages/Cart.jsx'
 
@@ -17,7 +17,7 @@ function Home() {
   const dispatch = useDispatch()
   const [currentCategory, setCurrentCategory] = useState('cocktail')
   const [showDetail, setShowDetail] = useState(false)
-  let [selected, setSelected] = useState(null) //state아닌 일반변수로 하면 작동안함
+  let [selected, setSelected] = useState(null) //돋보기 클릭한거. state아닌 일반변수로 하면 작동안함.
   
   return (
     <>
@@ -40,7 +40,6 @@ function Home() {
               className='icon' 
               icon={faMagnifyingGlassPlus} 
               onClick={()=>{
-                // dispatch(changeClickedItem({currentCategory, title: item.title}))
                 setSelected(item)
                 setShowDetail(prev=>!prev)
               }}
@@ -49,15 +48,15 @@ function Home() {
               className='icon' 
               icon={faCartShopping} 
               onClick={()=>{
-                const item = {
+                const temp = {
                   id: item.id,
                   title: item.title,
                   alc: item.alc,
-                  price: item.price,
+                  pricePerPiece: item.price,
+                  totalPrice: item.price,
                   count: 1,
                 }
-                dispatch(addItemInCart({item, tableNumber}))
-                alert('장바구니에 담겼습니다 1초후에 닫히는거로 개선할예정')
+                dispatch(addItemInCart({item: temp, tableNumber}))                
               }}
             />
           </div>
