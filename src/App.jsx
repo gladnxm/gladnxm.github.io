@@ -5,7 +5,7 @@ import { faCartShopping, faMagnifyingGlassPlus } from '@fortawesome/free-solid-s
 import { Route, Routes, Link, Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import './style/App.scss'
-import { addItemInCart } from './store.js';
+import { addItemToCart } from './store.js';
 import AllMenu from './AllMenu.js'
 import Detail from './components/Detail.jsx'
 import OrderList from './pages/OrderList.jsx';
@@ -57,7 +57,7 @@ function Home() {
                   totalPrice: item.price,
                   count: 1,
                 }
-                dispatch(addItemInCart({item: temp, tableNumber}))                
+                dispatch(addItemToCart({item: temp, tableNumber}))                
               }}
             />
           </div>

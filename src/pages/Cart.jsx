@@ -27,8 +27,8 @@ function Cart() {
   let { tableNumber } = useParams()
   tableNumber = parseInt(tableNumber)
   const navigate = useNavigate()
-  const cart = useSelector(state => state.cart[tableNumber])
-  const [total, setTotal] = useState(0)
+  const cart = useSelector(state => state.tableInfo.cart[tableNumber])
+  console.log(cart)
 
   return (
     <>   
