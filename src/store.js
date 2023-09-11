@@ -2,6 +2,62 @@ import { configureStore, createSlice } from '@reduxjs/toolkit'
 import AllMenu from './AllMenu'
 // 6은 테이블 갯수임
 
+const tableInfo = createSlice({
+  name: 'table',
+  initialState: {
+    cart: Array(6).fill([]),
+    orderList: Array(6).fill([]),
+    orderStatus: Array(6).fill([]),
+  },
+  reducers: {
+    addItemToCart(state, action) {
+      alert('장바구니에 담겼습니다 .5초후에 팝업창 사라지는거로 개선예정')
+      const { item, tableNumber } = action.payload
+      const cart = state.cart[tableNumber]
+      const exist = cart.find(el=>el.title === item.title)
+      const existIndex = cart.findIndex(el=>el.title === item.title)
+      if (exist) {
+        cart[existIndex] = {
+          ...exist,
+          count: exist.count+1,
+          totalPrice: exist.pricePerPiece * (exist.count+1)
+        }          
+      } else {
+        cart.push(item)
+      }
+    },
+    plusCount(state, action) {
+      const { item, tableNumber } = action.payload
+      const cart = state.cart[tableNumber]
+      const exist = cart.find(el=>el.title === item.title)
+      const existIndex = cart.findIndex(el=>el.title === item.title)
+      cart[existIndex] = {
+        ...exist,
+        count: exist.count+1,
+        totalPrice: exist.pricePerPiece * (exist.count+1)
+      }      
+    },
+    minusCount(state, action) {
+      const { item, tableNumber } = action.payload
+      const cart = state.cart[tableNumber]
+      const exist = cart.find(el=>el.title === item.title)
+      if(exist.count <= 1) return
+      const existIndex = cart.findIndex(el=>el.title === item.title)
+      cart[existIndex] = {
+        ...exist,
+        count: exist.count-1,
+        totalPrice: exist.pricePerPiece * (exist.count-1)
+      }      
+    },
+    removeItem(state, action) {
+      const { item, tableNumber } = action.payload
+      const cart = state.cart[tableNumber]
+      const removeIndex = cart.findIndex(el=>el.title === item.title)
+      cart.splice(removeIndex, 1)
+    }
+  }
+})
+
 const cart = createSlice({ 
   name : 'cart',
   initialState : Array(6).fill([]),
@@ -54,7 +110,9 @@ export const { addItemInCart, plusCount, minusCount, removeItem } = cart.actions
 const orderList = createSlice({ // 주문목록
   name : 'orderList',
   initialState : Array(6).fill([]),
-  
+  reducers: {
+
+  }
 })
 
 const orderStatus = createSlice({ // 주문현황
@@ -71,6 +129,7 @@ export default configureStore({
   reducer: { 
     cart: cart.reducer,
     orderList: orderList.reducer,
-    orderStatus: orderStatus.reducer
+    orderStatus: orderStatus.reducer,
+    tableInfo: tableInfo.reducer
   }
 })
