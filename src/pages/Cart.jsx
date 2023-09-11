@@ -28,7 +28,6 @@ function Cart() {
   tableNumber = parseInt(tableNumber)
   const navigate = useNavigate()
   const cart = useSelector(state => state.tableInfo.cart[tableNumber])
-  console.log(cart)
 
   return (
     <>   
