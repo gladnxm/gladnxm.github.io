@@ -19,6 +19,39 @@ exist ? exist.count++ : state[tableNumber].push(item)
 다시 말해서 +버튼으로 수량 1 늘리거나 같은 제품을 또 담거나 
 같은 로직(개수늘고 그거에맞춰 그제품의 토탈값도 증가)이 작동하는 형태
 
+3. store의 중복되는 reducer들을 개선함
+같은 로직이 반복되면 바깥에 함수로 빼면 되는거였음
+근데 고치고나니 같은품목 장바구니에 여러번 담으면 개수가 안늘어남
+처음1개에서 2개까지는 늘어나는데 계속 담아도 2개에서 늘지않음
+결론부터 말하면 개수증가로직이 매우아주살짝 잘못됐었음
+const updateItem = {
+    ...cart[itemIndex],
+    count: cart[itemIndex].count + quantity,
+    totalPrice: cart[itemIndex].pricePerPiece * (cart[itemIndex].count + quantity)
+  }
+cart[itemIndex]으로 했어야할걸 그냥 item으로 해서 문제였던거임
+cart[itemIndex]으로하면 현재 장바구니에 담겨있는 아이템을 기준으로해서
+장바구니에 지금있는 타이틀이면 그것의 count에 수량quantity를 더하는 방식임
+근데 item으로 하면 App.jsx에 있듯이
+const temp = {
+  title: item.title,
+  alc: item.alc,
+  pricePerPiece: item.price,
+  totalPrice: item.price,
+  count: 1,
+} 
+dispatch(addItemToCart({item: temp, tableNumber}))  
+매번 이렇게 count가 1인 새상품? 으로 들어와버리니까
+count가 계속 기존값+quantity가 아닌 1+quantity로 반복되는거였음
+temp(=handleCartItem에서의 item)는 
+현재 장바구니에 담겨있는 값이 아니라 App.jsx에서 담기버튼 누를때마다 새로 보내주는 값임
+담기버튼 여러번 클릭했는데 딱 최초1회만 수량이 증가하고(1에서 2로증가) 그다음부터는 작동을안했음
+작동이 첨부터 아예안되거나 계속되거나 하면 헷갈리지 않았을텐데
+한번은 되는데 그담부터안되니까 이게뭔가해서 계속 헤맸음
+사실은 한번만 된게아니고 계속해서 count에 1+1이 들어간거였는데
+
+
+
 디테일 개선사항
 1.메뉴판에서 현재 카테고리 빨간 글자
 2.장바구니 담으면 alert대신 쪼만한 팝업창 뜨고 .5초후에 사라지기 

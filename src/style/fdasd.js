@@ -1,3 +1,6 @@
+// 학습 자료로 남겨둠
+
+
 const tableInfo = createSlice({
   name: 'tableInfo',
   initialState: {

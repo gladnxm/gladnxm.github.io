@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import { plusCount, minusCount, removeItem } from '../store.js'
+import { plusCount, minusCount, removeItem, addOrderList } from '../store.js'
 import '../style/Cart.scss'
 
 function Item({item, tableNumber}) {
@@ -14,10 +14,10 @@ function Item({item, tableNumber}) {
       <span>{'￦' + item.totalPrice}</span>
 
       <div className="control">
-        <button className="minus" onClick={() => dispatch(minusCount({item,tableNumber}))}>-</button>
+        <button className="minus" onClick={() => dispatch(minusCount({ item, tableNumber }))}>-</button>
         <span>{item.count}</span>
-        <button className="plus" onClick={() => dispatch(plusCount({item,tableNumber}))}>+</button>
-        <button className="remove" onClick={() => dispatch(removeItem({item,tableNumber}))}>X</button>
+        <button className="plus" onClick={() => dispatch(plusCount({ item, tableNumber }))}>+</button>
+        <button className="remove" onClick={() => dispatch(removeItem({ item, tableNumber }))}>X</button>
       </div>
     </div>
   )
@@ -27,6 +27,7 @@ function Cart() {
   let { tableNumber } = useParams()
   tableNumber = parseInt(tableNumber)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const cart = useSelector(state => state.tableInfo.cart[tableNumber])
 
   return (
@@ -46,7 +47,7 @@ function Cart() {
 
       <footer className="cart footer">
         <button onClick={()=>navigate(-1)}>뒤로가기</button>
-        <button>주문하기</button>
+        <button onClick={()=>dispatch(addOrderList({ cart: [...cart], tableNumber }))}>주문하기</button>
       </footer>
     </>
   )

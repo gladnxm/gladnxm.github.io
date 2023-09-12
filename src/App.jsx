@@ -50,7 +50,6 @@ function Home() {
               icon={faCartShopping} 
               onClick={()=>{
                 const temp = {
-                  id: item.id,
                   title: item.title,
                   alc: item.alc,
                   pricePerPiece: item.price,
