@@ -19,7 +19,7 @@ function OrderList() {
   tableNumber = parseInt(tableNumber)
   const navigate = useNavigate()
   const orderList = useSelector(state => state.tableInfo.orderList[tableNumber])
-
+  console.log(tableNumber)
   return (
     <>   
       <header className="cart header">

@@ -1,6 +1,6 @@
 // 학습 자료로 남겨둠
 
-
+/*
 const tableInfo = createSlice({
   name: 'tableInfo',
   initialState: {
@@ -31,7 +31,6 @@ const tableInfo = createSlice({
     },
   },
 });
-
 // 공통 함수로 아이템 업데이트 로직을 분리
 function updateCartItem(cart, item, quantityChange) {
   const existIndex = cart.findIndex((el) => el.title === item.title);
@@ -61,8 +60,6 @@ function updateCartItem(cart, item, quantityChange) {
 
   return [...cart]; // 새로운 배열을 반환하여 불변성 유지
 }
-
-
 
 
 
@@ -103,7 +100,6 @@ const tableInfo = createSlice({
     },
   },
 });
-
 // 업데이트 함수를 더 간단하게 만들기
 function updateCartItem(cart, item, quantityChange) {
   const cartIndex = cart.findIndex((el) => el.title === item.title);
@@ -125,8 +121,6 @@ function updateCartItem(cart, item, quantityChange) {
 
   return [...cart]; // 새로운 배열을 반환하여 불변성 유지
 }
-
-
 
 
 
@@ -158,7 +152,6 @@ const tableInfo = createSlice({
     },
   },
 });
-
 function handleCartItem(state, action, quantityChange) {
   const { item, tableNumber } = action.payload;
   const cart = state.cart[tableNumber];
@@ -180,3 +173,4 @@ function handleCartItem(state, action, quantityChange) {
     cart.push({ ...item, count: 1, totalPrice: item.pricePerPiece });
   }
 }
+*/

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
-import { Route, Routes, Link, Outlet, useNavigate, useParams } from 'react-router-dom'
+import { Route, Routes, Link, useParams } from 'react-router-dom'
 
 import './style/App.scss'
 import { addItemToCart } from './store.js';
@@ -76,14 +76,20 @@ function Home() {
 
 function App() {
   return (
-    <>
     <Routes>
+      <Route path='/' element={
+        <>
+          <Link to='/1'>1번테이블 </Link>
+          <Link to='/2'>2번테이블 </Link>
+          <Link to='/3'>3번테이블 </Link>
+          <Link to='/admin'>어드민 </Link>
+        </>
+      } />
       <Route path='/:tableNumber' element={<Home />} />
       <Route path='/:tableNumber/cart' element={<Cart />} />
       <Route path='/:tableNumber/orderList' element={<OrderList />} />
       <Route path='/admin' element={<OrderStatus />} />
     </Routes>
-    </>
   )
 }
 export default App

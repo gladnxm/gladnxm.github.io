@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 import { plusCount, minusCount, removeItem, addOrderList } from '../store.js'

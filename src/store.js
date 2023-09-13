@@ -47,25 +47,24 @@ const tableInfo = createSlice({
     },
     addOrderList(state, action) {
       const { cart, tableNumber } = action.payload
-      const tempOrderList = [...state.orderList[tableNumber], ...cart]
-      const mergedObject = {};
+      let orderList = state.orderList[tableNumber]
+      const tempOrderList = [...orderList, ...cart]
+      const merged = {}
 
       tempOrderList.forEach(item => {
         const title = item.title;  
-        if (mergedObject[title]) {
-          mergedObject[title].count += item.count;
-          mergedObject[title].totalPrice += item.totalPrice;
+        if (merged[title]) {
+          merged[title].count += item.count;
+          merged[title].totalPrice += item.totalPrice;
         }
         else 
-          mergedObject[title] = item;        
-      });
+          merged[title] = item;        
+      })
 
-      state.orderList[tableNumber] = Object.values(mergedObject);
+      // cart.forEach(item => state.orderStatus[tableNumber].push(`${item.title} ${item.count}`))
       state.cart[tableNumber] = []
-    },
-    addOrderState(state, action) {
-      const { item, tableNumber } = action.payload      
-      state.orderStatus[tableNumber].push(`${item.title} ${item.count}`)      
+      state.orderList[tableNumber] = Object.values(merged)
+      alert("주문완료됨")
     }
   }
 })
@@ -75,8 +74,7 @@ export const {
   plusCount, 
   minusCount, 
   removeItem,
-  addOrderList, 
-  addOrderState,
+  addOrderList
 } = tableInfo.actions
 
 export default configureStore({
