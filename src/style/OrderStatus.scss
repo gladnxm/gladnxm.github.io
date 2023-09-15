@@ -1,0 +1,28 @@
+.orderstate {
+  width: 800px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  border: 2px solid #524f4f;
+  .box {
+    box-sizing: border-box;
+    border: 1px solid #b0e691;
+    width: 200px;
+    height: 200px;
+    overflow-y: scroll;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    button {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
+  }
+}
+
+.goback {
+  position: relative;
+  right: -50px;
+}

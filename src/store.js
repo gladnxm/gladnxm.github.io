@@ -60,11 +60,16 @@ const tableInfo = createSlice({
         else 
           merged[title] = item;        
       })
-
-      // cart.forEach(item => state.orderStatus[tableNumber].push(`${item.title} ${item.count}`))
-      state.cart[tableNumber] = []
-      state.orderList[tableNumber] = Object.values(merged)
+      
+      cart.forEach(item => state.orderStatus[tableNumber].push(`${item.title} ${item.count}`)) //orderState바꾸기
+      state.cart[tableNumber] = [] // 장바구니 비우기
+      state.orderList[tableNumber] = Object.values(merged) //주문내역 갱신
       alert("주문완료됨")
+    },
+    setOrderState(state, action) {
+      // const { tableNumber } = action.payload
+      // cart.forEach(item => state.orderStatus[tableNumber].push(`${item.title} ${item.count}`))
+      // state.orderStatus[tableNumber] = 0
     }
   }
 })
