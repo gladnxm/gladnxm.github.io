@@ -11,6 +11,7 @@ import Detail from './components/Detail.jsx'
 import OrderList from './pages/OrderList.jsx';
 import OrderStatus from './pages/OrderStatus';
 import Cart from './pages/Cart.jsx'
+import EditForm from './pages/EditForm';
 
 function Home() {
   let { tableNumber } = useParams()
@@ -83,12 +84,14 @@ function App() {
           <Link to='/2'>2번테이블 </Link>
           <Link to='/3'>3번테이블 </Link>
           <Link to='/admin'>어드민 </Link>
+          <Link to='/edit'>메뉴수정 </Link>
         </>
       } />
       <Route path='/:tableNumber' element={<Home />} />
       <Route path='/:tableNumber/cart' element={<Cart />} />
       <Route path='/:tableNumber/orderList' element={<OrderList />} />
       <Route path='/admin' element={<OrderStatus />} />
+      <Route path='/edit' element={<EditForm />} />
     </Routes>
   )
 }
