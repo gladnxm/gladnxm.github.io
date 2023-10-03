@@ -1,26 +1,38 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
 import { Route, Routes, Link, useParams } from 'react-router-dom'
+import { collection, getDocs, onSnapshot, query } from "firebase/firestore"
+import { db } from "./firebase"
 
 import './style/App.scss'
 import { addItemToCart } from './store.js';
-import AllMenu from './AllMenu.js'
 import Detail from './components/Detail.jsx'
 import OrderList from './pages/OrderList.jsx';
 import OrderStatus from './pages/OrderStatus';
 import Cart from './pages/Cart.jsx'
-import EditForm from './pages/EditForm';
+import EditMenu from './pages/EditMenu';
 
 function Home() {
   let { tableNumber } = useParams()
   tableNumber = parseInt(tableNumber)
   const dispatch = useDispatch()
   const [currentCategory, setCurrentCategory] = useState('cocktail')
+  const [menu, setMenu] = useState([])
   const [showDetail, setShowDetail] = useState(false)
-  let [selected, setSelected] = useState(null) //돋보기 클릭한거. state아닌 일반변수로 하면 작동안함.
+  const [selected, setSelected] = useState(null) //돋보기 클릭한거. state아닌 일반변수로 하면 작동안함.
   
+  useEffect(()=>{
+    const fetchMenu = async() => {
+      const menuQuery = query(collection(db, currentCategory))
+      const snapshot = await getDocs(menuQuery)
+      const temp = snapshot.docs.map(doc => doc.data())
+      setMenu(temp)
+    }
+    fetchMenu()
+  }, [currentCategory])
+
   return (
     <>
     <nav className='home nav'>
@@ -30,11 +42,11 @@ function Home() {
       <button onClick={()=>setCurrentCategory('whiskey')}>위스키</button>
       <button onClick={()=>setCurrentCategory('dish')}>안주</button>
       <p><Link to='/admin'> Table {tableNumber + 1} </Link></p>
-    </nav>
+    </nav> 
     {
-      AllMenu[currentCategory].map(item => {
+        menu.map((item, i) => {
         return (
-          <div className='home item' key={item.id}>  
+          <div className='home item' key={i}>  
             <span>{item.title}</span>
             <span>{item.alc && item.alc + '%'}</span>
             <span>{'￦' + item.price}</span>
@@ -68,9 +80,7 @@ function Home() {
       <Link to={`/${tableNumber}/orderList`}>주문내역</Link>
       <Link to={`/${tableNumber}/cart`}>장바구니</Link>
     </footer>
-    {
-      showDetail && <Detail item={selected} setShowDetail={setShowDetail} />
-    }
+    {showDetail && <Detail item={selected} setShowDetail={setShowDetail} />}
     </>
   )
 } 
@@ -91,7 +101,7 @@ function App() {
       <Route path='/:tableNumber/cart' element={<Cart />} />
       <Route path='/:tableNumber/orderList' element={<OrderList />} />
       <Route path='/admin' element={<OrderStatus />} />
-      <Route path='/edit' element={<EditForm />} />
+      <Route path='/edit' element={<EditMenu />} />
     </Routes>
   )
 }
