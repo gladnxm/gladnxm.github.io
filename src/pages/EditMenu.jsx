@@ -1,10 +1,11 @@
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore"
-import { db } from "../firebase"
+import { collection, deleteDoc, doc, getDocs, query } from "firebase/firestore"
+import { db, storage } from "../firebase"
 import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import EditForm from "../components/EditForm";
 import "../style/EditMenu.scss"
+import { deleteObject, ref } from "firebase/storage";
 
 function EditMenu() {
   const [currentCategory, setCurrentCategory] = useState('cocktail')
@@ -20,13 +21,30 @@ function EditMenu() {
     setSelected(item)
     setEdit(prev=>!prev)
   }
-  const remove = () => {}
-
+  const remove = async item => {
+    const ok = confirm("지울거임?")
+    if(!ok) return
+    await deleteDoc(doc(db, `${currentCategory}`, item.docID))
+    const photoRef = ref(storage, `${currentCategory}/${item.title}`)
+    await deleteObject(photoRef)
+    alert("삭제됨")
+  }
+    
   useEffect(()=>{
     const fetchMenu = async() => {
       const menuQuery = query(collection(db, currentCategory))
       const snapshot = await getDocs(menuQuery)
-      const temp = snapshot.docs.map(doc => doc.data())
+      const temp = snapshot.docs.map(doc => {
+        const {title, price, alc, explanation, imgURL} = doc.data()
+        return {
+          title, 
+          price, 
+          alc, 
+          explanation, 
+          imgURL,
+          docID: doc.id
+        }
+      })
       setMenu(temp)
     }
     fetchMenu()
@@ -57,7 +75,7 @@ function EditMenu() {
               <FontAwesomeIcon 
                 className='icon' 
                 icon={faTrash} //삭제 휴지통아이콘 
-                onClick={remove}
+                onClick={() => remove(item)}
               />
             </div>
           )

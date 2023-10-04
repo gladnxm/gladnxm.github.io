@@ -4,7 +4,7 @@ import '../style/Detail.scss'
 function Detail({ item, setShowDetail }) {
   return (
     <div className="detail">
-      <img src={item.imgURL} alt="" />
+      <img src={item.imgURL} alt="상품이미지" />
       <div className="info">
         <p>{item.title}</p>
         <p>{item.alc ? `알코올 ${item.alc}%` : ''}</p>
