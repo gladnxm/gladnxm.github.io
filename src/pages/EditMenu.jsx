@@ -1,4 +1,4 @@
-import { collection, deleteDoc, doc, getDocs, query } from "firebase/firestore"
+import { collection, deleteDoc, doc, getDocs, query, updateDoc } from "firebase/firestore"
 import { db, storage } from "../firebase"
 import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,8 +17,8 @@ function EditMenu() {
     setSelected(null)
     setEdit(prev=>!prev)
   }
-  const modify = item => {
-    setSelected(item)
+  const modify = async item => {
+    setSelected(item) 
     setEdit(prev=>!prev)
   }
   const remove = async item => {
@@ -34,17 +34,20 @@ function EditMenu() {
     const fetchMenu = async() => {
       const menuQuery = query(collection(db, currentCategory))
       const snapshot = await getDocs(menuQuery)
-      const temp = snapshot.docs.map(doc => {
-        const {title, price, alc, explanation, imgURL} = doc.data()
-        return {
-          title, 
-          price, 
-          alc, 
-          explanation, 
-          imgURL,
-          docID: doc.id
-        }
-      })
+      const temp = snapshot.docs.map(doc => ({...doc.data(), docID: doc.id}))
+      //아래코드를 줄인건데 만약되던게 안되면 아래코드로 다시롤백    
+      
+      // const temp = snapshot.docs.map(doc => {
+      //   const {title, price, alc, explanation, imgURL} = doc.data()
+      //   return {
+      //     title, 
+      //     price, 
+      //     alc, 
+      //     explanation, 
+      //     imgURL,
+      //     docID: doc.id
+      //   }
+      // })
       setMenu(temp)
     }
     fetchMenu()
