@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react"
 import { collection, onSnapshot, query } from "firebase/firestore"
 import { db } from "../firebase"
+import styled from "styled-components"
 
 function Payment({tableNumber, setShowPayment}) {
   const orderList = useSelector(state => state.tableInfo.orderList[tableNumber])
@@ -25,6 +26,16 @@ function Payment({tableNumber, setShowPayment}) {
       <button onClick={() => alert('결제완료됨')}>결제하기</button>
       <button onClick={() => setShowPayment(prev=>!prev)}>뒤로가기</button>
     </div>
+  )
+}
+
+const Span = styled.span`
+  color: ${props => props.isRed ? 'red' : 'green'};
+`
+function Item({item}) {
+  const [isRed, setIsRed] = useState(true)
+  return (
+    <Span isRed={isRed} onClick={()=>setIsRed(prev=>!prev)}>{item}</Span>
   )
 }
 
@@ -56,7 +67,7 @@ function OrderStatus() {
         tables.map((table, i) => {
           return (
             <div className="box" key={i}>
-              { table.map(item => <span key={i}>{item}</span>) }
+              { table.map(item => <Item key={i} item={item} />) }
               <button onClick={()=>clickEvent(i)}>결제</button>
             </div>
           )
