@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
 import { Route, Routes, Link, useParams } from 'react-router-dom'
-import { collection, getDocs, onSnapshot, query } from "firebase/firestore"
+import { collection, getDocs, query } from "firebase/firestore"
 import { db } from "./firebase"
 
 import './style/App.scss'

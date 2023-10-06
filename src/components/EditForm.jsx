@@ -2,11 +2,10 @@
 import "../style/EditForm.scss"
 import { useState } from "react";
 import { db, storage } from "../firebase";
-import { addDoc, collection, deleteDoc, doc, updateDoc } from "firebase/firestore"
+import { addDoc, collection, doc, updateDoc } from "firebase/firestore"
 import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage"
 
 function EditForm({setEdit, item}) {
-  // const [imgFile, setImgFile] = useState(item.imgURL || null);
   const [img, setImg] = useState(item ? item.imgURL : "");
   const [file, setFile] = useState(item ? JSON.parse(item.file) : null);
   const [title, setTitle] = useState(item ? item.title : "");
@@ -32,7 +31,7 @@ function EditForm({setEdit, item}) {
       const url = await getDownloadURL(result.ref)
       await addDoc(
         collection(db, category),
-        { title, price, alc, explanation, category, file:JSON.stringify(file), imgURL: url }
+        { title, price:parseInt(price), alc:parseInt(alc), explanation, category, file:JSON.stringify(file), imgURL: url }
       )
     } else { //수정 
       let url = item.imgURL;
@@ -45,7 +44,7 @@ function EditForm({setEdit, item}) {
       }
       await updateDoc(
         doc(db, category, item.docID),
-        { title, price, alc, explanation, category, file:JSON.stringify(file), imgURL: url }
+        { title, price:parseInt(price), alc:parseInt(alc), explanation, category, file:JSON.stringify(file), imgURL: url }
       )
     }
     

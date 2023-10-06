@@ -35,19 +35,6 @@ function EditMenu() {
       const menuQuery = query(collection(db, currentCategory))
       const snapshot = await getDocs(menuQuery)
       const temp = snapshot.docs.map(doc => ({...doc.data(), docID: doc.id}))
-      //아래코드를 줄인건데 만약되던게 안되면 아래코드로 다시롤백    
-      
-      // const temp = snapshot.docs.map(doc => {
-      //   const {title, price, alc, explanation, imgURL} = doc.data()
-      //   return {
-      //     title, 
-      //     price, 
-      //     alc, 
-      //     explanation, 
-      //     imgURL,
-      //     docID: doc.id
-      //   }
-      // })
       setMenu(temp)
     }
     fetchMenu()
