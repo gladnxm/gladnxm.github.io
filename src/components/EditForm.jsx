@@ -33,7 +33,7 @@ function EditForm({setEdit, item}) {
         collection(db, category),
         { title, price:parseInt(price), alc:parseInt(alc), explanation, category, file:JSON.stringify(file), imgURL: url }
       )
-    } else { //수정 
+    } else { // 수정 
       let url = item.imgURL;
       if(file !== item.file) {
         let photoRef = ref(storage, `${item.category}/${item.title}`)
