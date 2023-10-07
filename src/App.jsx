@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
 import { Route, Routes, Link, useParams } from 'react-router-dom'
 import { collection, getDocs, query } from "firebase/firestore"
-import { db } from "./firebase"
+import { auth, db } from "./firebase"
 
 import './style/App.scss'
 import { addItemToCart } from './store.js';
@@ -14,10 +14,14 @@ import OrderStatus from './pages/OrderStatus';
 import Cart from './pages/Cart.jsx'
 import EditMenu from './pages/EditMenu';
 import Book from './member-pages/book';
+import CreateAccount from './pages/create-account';
+import Login from './pages/login';
 
 function Home() {
   let { tableNumber } = useParams()
   tableNumber = parseInt(tableNumber)
+  const user = auth.currentUser
+  console.log(user)
   const dispatch = useDispatch()
   const [currentCategory, setCurrentCategory] = useState('cocktail')
   const [menu, setMenu] = useState([])
@@ -68,6 +72,7 @@ function Home() {
                   alc: item.alc,
                   pricePerPiece: item.price,
                   totalPrice: item.price,
+                  category: item.category,
                   count: 1,
                 }
                 dispatch(addItemToCart({item: temp, tableNumber}))                
@@ -91,12 +96,13 @@ function App() {
     <Routes>
       <Route path='/' element={
         <>
-          <Link to='/0'>1번테이블 </Link>
-          <Link to='/1'>2번테이블 </Link>
-          <Link to='/2'>3번테이블 </Link>
-          <Link to='/admin'>어드민 </Link>
-          <Link to='/edit'>메뉴수정 </Link>
-          <Link to='/book'>도감 </Link>
+          <p><Link to='/0/login'>1번테이블의 qr </Link></p>
+          <p><Link to='/1/login'>2번테이블 qr </Link></p>
+          <p><Link to='/2/login'>3번테이블 qr</Link></p>
+          <p><Link to='/admin'>어드민 </Link></p>
+          <p><Link to='/edit'>메뉴수정 </Link></p>
+          <p><Link to='/book'>도감 </Link></p>
+          <p><Link to='/Login'>로그인 </Link></p>
         </>
       } />
       <Route path='/:tableNumber' element={<Home/>}/>
@@ -105,6 +111,8 @@ function App() {
       <Route path='/admin' element={<OrderStatus/>}/>
       <Route path='/edit' element={<EditMenu/>}/>
       <Route path='/book' element={<Book/>}/>
+      <Route path='/:tableNumber/login' element={<Login/>}/>
+      <Route path='/:tableNumber/create-account' element={<CreateAccount/>}/>
     </Routes>
   )
 }

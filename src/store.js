@@ -65,7 +65,7 @@ const tableInfo = createSlice({
           merged[title] = item;        
       })
 
-      //orderState바꾸기 : 이로직 잘되면 밑에 setorede여기에 넣고 주문하는 페이지에서 setorede추가로 실행하는 방식으로가자
+      //orderState바꾸기 : 이로직 잘되면 밑에 setorede에 넣고 주문하는 페이지에서 setorede추가호출하는 방식으로가자
       cart.forEach(item => state.orderStatus[tableNumber].push(`${item.title} --- ${item.count}개`)) 
       state.cart[tableNumber] = [] // 장바구니 비우기
       state.orderList[tableNumber] = Object.values(merged) //주문내역 갱신

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 import { plusCount, minusCount, removeItem, addOrderList } from '../store.js'
 import '../style/Cart.scss'
+import { doc, getDoc, updateDoc } from "firebase/firestore"
+import { auth, db } from "../firebase.js"
 
 function Item({item, tableNumber}) {
   const dispatch = useDispatch()
@@ -23,12 +25,22 @@ function Item({item, tableNumber}) {
 }
 
 function Cart() {
+  const user = auth.currentUser
   let { tableNumber } = useParams()
   tableNumber = parseInt(tableNumber)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const cart = useSelector(state => state.tableInfo.cart[tableNumber])
-
+  
+  const updateCollection = async () => {
+    const ref = doc(db, 'UserCollection', user.uid)
+    let collection = await getDoc(ref)
+    collection = collection.data()
+    cart.forEach(item => collection[item.category].push(item.title)) //여기서에러
+    for (let category in collection) 
+      collection[category] = [...new Set(collection[category])];    
+    updateDoc(ref, collection)
+  }
   return (
     <>   
       <header className="cart header">
@@ -41,12 +53,16 @@ function Cart() {
       { cart.map((item, i) => <Item item={item} tableNumber={tableNumber} key={i} />) }
       
       <span className="cart total">
-      { `합계 : ￦${cart.reduce((acc, cur) => acc + cur.totalPrice, 0)}` }
+      { `합계 : ￦${cart.reduce((acc, cur) => acc + cur.totalPrice, 0)}` }      
       </span>      
 
       <footer className="cart footer">
         <button onClick={()=>navigate(-1)}>뒤로가기</button>
-        <button onClick={()=>dispatch(addOrderList({ cart: [...cart], tableNumber }))}>주문하기</button>
+        <button onClick={()=>{
+          dispatch(addOrderList({ cart: [...cart], tableNumber }))
+          updateCollection()
+        }}>주문하기
+        </button>
       </footer>
     </>
   )
