@@ -46,7 +46,7 @@ function Home() {
       <button onClick={()=>setCurrentCategory('wine')}>와인</button>
       <button onClick={()=>setCurrentCategory('whiskey')}>위스키</button>
       <button onClick={()=>setCurrentCategory('dish')}>안주</button>
-      <p><Link to='/admin'> Table {tableNumber + 1} </Link></p>
+      <p><Link to='/book'> Table {tableNumber + 1} </Link></p>
     </nav> 
     {
         menu.map((item, i) => {
