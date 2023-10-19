@@ -68,12 +68,14 @@ function Book() {
 
   const earnPoints = async(acc, price, idx) => {
     const temp = [...userPoint[category]]
-    temp[idx] = false
-    await updateDoc(doc(db, "UserPoint", uid.current), { 
-        myPoint: userPoint.myPoint + price, 
-        category: temp     
-      }
-    )
+    temp[idx] = false //버튼을 최초로 누르는건지 에대한여부
+    const renewaled = {
+      ...userPoint,
+      myPoint: userPoint.myPoint + price, 
+      [category]: temp 
+    }
+    await updateDoc(doc(db, "UserPoint", uid.current), renewaled)
+    setUserPoint(renewaled)
     alert(price + " 포인트 적립됨. 다음 주문시 사용 가능")
   }
 
@@ -87,19 +89,25 @@ function Book() {
         <button onClick={()=>setCategory('whiskey')}>위스키</button>
         <button onClick={()=>setCategory('dish')}>안주</button>
       </Nav>
-      {
-        // userCollection.current == false ? 
-        // (<p>로딩중</p>) :
-        (
-          <div>
-            <p>{`${userCollection[category].length} / ${menu.length}`}</p>
-            <button disabled={userPoint[category][0]} onClick={()=>earnPoints(5,10000,0)}>qq</button>
-            <button disabled={userPoint[category][1]} onClick={()=>earnPoints(10,20000,1)}>dd</button>
-            <button disabled={userPoint[category][2]} onClick={()=>earnPoints(15,30000,2)}>ss</button>
-          </div>
-        ) 
-      }
-      
+      <div className="btns">
+        <p>{`${userCollection[category].length} / ${menu.length}`}</p>
+        <p>{`보유포인트 : ${userPoint.myPoint}`}</p>
+        <button 
+          disabled={!(userCollection[category].length >= 5 && userPoint[category][0])} 
+          onClick={()=>earnPoints(5,10000,0)}
+        >5개 달성
+        </button>
+        <button 
+          disabled={!(userCollection[category].length >= 10 && userPoint[category][1])} 
+          onClick={()=>earnPoints(10,20000,1)}
+        >10개 달성
+        </button>
+        <button 
+          disabled={!(userCollection[category].length >= 15 && userPoint[category][2])} 
+          onClick={()=>earnPoints(15,30000,2)}
+        >15개 달성
+        </button>
+      </div>      
       <Section>
       {
         menu.map((el, i) => {
