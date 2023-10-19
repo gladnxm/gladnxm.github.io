@@ -1,5 +1,5 @@
 .edit-menu {
-  width: 600px;
+  width: 700px;
   height: 400px;
   position: relative;
   border: 1px solid #b0e691;
@@ -17,11 +17,11 @@
   }
   .item {
     background-color: rgb(231, 225, 225);
-    width: 400px;
+    width: 600px;
     height: 40px;
     line-height: 2.5;
     span {display: inline-block;}
-    span:nth-of-type(1) {width: 140px;}
+    span:nth-of-type(1) {width: 200px;}
     span:nth-of-type(2) {width: 50px;}
     span:nth-of-type(3) {width: 80px;}
     .icon {width: 40px;} 

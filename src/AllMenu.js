@@ -1,178 +1,61 @@
-const cocktail = [
-  {
-    title : "카타르시스",
-    alc : 50,
-    price : 12000,
-    explanation: '카타에대한 설명'
-  },
-  {
-    title : "블루하와이",
-    alc : 5,
-    price : 11000,
-    explanation: '블루에대한 설명'
-  },
-  {
-    title : "피치크러시",
-    alc : 8,
-    price : 12000,
-    explanation: '피치에대한 설명'
-  },
-  {
-    title : "깔루아밀크",
-    alc : 15,
-    price : 11000,
-    explanation: '깔루아에대한 설명'
-  },
-  {
-    title : "진토닉",
-    alc : 9,
-    price : 8000,
-    explanation: '진토닉에대한 설명'
-  },
-  {
-    title : "옥보단",
-    alc : 17,
-    price : 9000,
-    explanation: '옥보단에대한 설명'
-  },
-  {
-    title : "블랙러시안",
-    alc : 40,
-    price : 13000,
-    explanation: '러시안에대한 설명'
-  },
-  {
-    title : "애플마니티",
-    alc : 35,
-    price : 15000,
-    explanation: '애플마니티에대한 설명'
-  },
-  {
-    title : "우우",
-    alc : 5,
-    price : 7000,
-    explanation: '우우에대한 설명'
-  },
-  {
-    title : "아이스민트",
-    alc : 50,
-    price : 3000,
-    explanation: '민트에대한 설명'
-  },
-  {
-    title : "블랙홀",
-    alc : 50,
-    price : 16000,
-    explanation: '블랙홀에대한 설명'
-  },
-  {
-    title : "페니실린",
-    alc : 30,
-    price : 10000,
-    explanation: '페니실린에대한 설명'
-  },
-  {
-    title : "라모스진피즈",
-    alc : 12,
-    price : 13000,
-    explanation: '진피즈에대한 설명'
-  },
-  {
-    title : "데드",
-    alc : 40,
-    price : 12000,
-    explanation: '데드에대한 설명'
+function EditForm({setEdit, item}) {
+  const [img, setImg] = useState(item ? item.imgURL : "");
+  const [file, setFile] = useState(item ? JSON.parse(item.file) : null);
+
+  const onImageChange = e => {    
+    const f = e.target.files[0];    
+    const reader = new FileReader();
+    reader.onload = e => setImg(e.target.result)
+    reader.readAsDataURL(f)
+    //실제 파일을 업로드하는 로직과 form에서 미리보기 띄우는 로직이 구분됨
+    const {files} = e.target;
+    (files && files.length === 1) && setFile(files[0]);
   }
-]
-
-const beer = [
-  {
-    title : "맥주1",
-    alc : 5,
-    price : 12000
-  },
-  {
-    title : "맥주2",
-    alc : 5.5,
-    price : 11000
-  },
-  {
-    title : "맥주3",
-    alc : 4.5,
-    price : 12000
-  },
-  {
-    title : "맥주4",
-    alc : 4,
-    price : 11000
+  const onSubmit = async e => {
+    e.preventDefault()    
+    if(!item) { //생성
+      const photoRef = ref(storage, `${category}/${title}`)
+      const result = await uploadBytes(photoRef, file)
+      const url = await getDownloadURL(result.ref)
+      await addDoc(
+        collection(db, category),
+        { file:JSON.stringify(file), imgURL: url }
+      )
+    } else { // 수정 
+      let url = item.imgURL;
+      if(file !== item.file) {
+        let photoRef = ref(storage, `${item.category}/${item.title}`)
+        await deleteObject(photoRef)
+        photoRef = ref(storage, `${category}/${title}`)
+        const result = await uploadBytes(photoRef, file)
+        url = await getDownloadURL(result.ref)
+      }
+      await updateDoc(
+        doc(db, category, item.docID),
+        {  file:JSON.stringify(file), imgURL: url }
+      )
+    }
   }
-]
 
-const wine = [
-  {
-    title : "와인1",
-    alc : 50,
-    price : 12000
-  },
-  {
-    title : "와인2",
-    alc : 5,
-    price : 11000
-  },
-  {
-    title : "와인3",
-    alc : 8,
-    price : 12000
-  },
-  {
-    title : "와인4",
-    alc : 15,
-    price : 11000
-  },
-]
+  return (
+    <form 
+      action="#" 
+      className="editform" 
+      onSubmit={onSubmit}
+    >      
+      <label>이미지 첨부
+        <input 
+          type="file" 
+          name="img" 
+          accept="image/*" 
+          onChange={onImageChange}  
+        />
+      </label>
 
-const whiskey = [
-  {
-    title : "위스키1",
-    alc : 50,
-    price : 12000
-  },
-  {
-    title : "위스키2",
-    alc : 5,
-    price : 11000
-  },
-  {
-    title : "위스키3",
-    alc : 8,
-    price : 12000
-  },
-  {
-    title : "위스키4",
-    alc : 15,
-    price : 11000
-  },
-]
-
-const dish = [
-  {
-    title : "안주1",
-    price : 12000
-  },
-  {
-    title : "안주2",
-    price : 11000
-  },
-  {
-    title : "안주3",
-    price : 12000
-  },
-  {
-    title : "안주4",
-    price : 11000
-  },
-]
-
-export default {
-  cocktail, beer, wine, whiskey, dish
+      {img && <img src={img} alt="미리보기" />}
+      <button type="button" onClick={()=>setEdit(prev=>!prev)}>취소</button>
+      <button type="submit">완료</button>
+    </form>
+  )
 }
+export default EditForm

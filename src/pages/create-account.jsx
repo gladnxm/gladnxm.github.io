@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { addDoc, collection, doc, setDoc } from "firebase/firestore"
 import { auth, db } from "../firebase"
+import { faL } from "@fortawesome/free-solid-svg-icons"
 
 function CreateAccount() {
   let { tableNumber } = useParams()
@@ -31,6 +32,15 @@ function CreateAccount() {
       wine: [],
       beer: [],
       dish: [],
+    })
+    const pointTemplate = Array(3).fill(true)
+    await setDoc(doc(db, `UserPoint/${credentions.user.uid}`), {
+      cocktail: [...pointTemplate],
+      whiskey: [...pointTemplate],
+      wine: [...pointTemplate],
+      beer: [...pointTemplate],
+      dish: [...pointTemplate],
+      myPoint: 0
     })
     alert("가입완료")
     navigate(`/${tableNumber}`)

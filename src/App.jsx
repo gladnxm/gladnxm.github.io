@@ -20,8 +20,7 @@ import Login from './pages/login';
 function Home() {
   let { tableNumber } = useParams()
   tableNumber = parseInt(tableNumber)
-  const user = auth.currentUser
-  console.log(user)
+  console.log(auth.currentUser)
   const dispatch = useDispatch()
   const [currentCategory, setCurrentCategory] = useState('cocktail')
   const [menu, setMenu] = useState([])
@@ -53,7 +52,7 @@ function Home() {
         return (
           <div className='home item' key={i}>  
             <span>{item.title}</span>
-            <span>{item.alc && item.alc + '%'}</span>
+            <span>{item.alc ? item.alc + '%' : ''}</span>
             <span>{'￦' + item.price}</span>
             <FontAwesomeIcon
               className='home icon' 

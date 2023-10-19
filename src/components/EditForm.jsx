@@ -7,7 +7,7 @@ import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage
 
 function EditForm({setEdit, item}) {
   const [img, setImg] = useState(item ? item.imgURL : "");
-  const [file, setFile] = useState(item ? JSON.parse(item.file) : null);
+  const [file, setFile] = useState(null);
   const [title, setTitle] = useState(item ? item.title : "");
   const [price, setPrice] = useState(item ? item.price : "");
   const [alc, setAlc] = useState(item ? item.alc : "");
@@ -15,13 +15,9 @@ function EditForm({setEdit, item}) {
   const [category, setCategory] = useState(item ? item.category : "cocktail");
 
   const onImageChange = e => {    
-    const f = e.target.files[0];    
-    const reader = new FileReader();
-    reader.onload = e => setImg(e.target.result)
-    reader.readAsDataURL(f)
-    //실제 파일을 업로드하는 로직과 form에서 미리보기 띄우는 로직이 구분됨
-    const {files} = e.target;
-    (files && files.length === 1) && setFile(files[0]);
+    const f = e.target.files[0]; 
+    setImg(URL.createObjectURL(f))
+    setFile(f)
   }
   const onSubmit = async e => {
     e.preventDefault()    
@@ -31,11 +27,11 @@ function EditForm({setEdit, item}) {
       const url = await getDownloadURL(result.ref)
       await addDoc(
         collection(db, category),
-        { title, price:parseInt(price), alc:parseInt(alc), explanation, category, file:JSON.stringify(file), imgURL: url }
+        { title, price:parseInt(price), alc:parseFloat(alc), explanation, category, imgURL: url }
       )
     } else { // 수정 
       let url = item.imgURL;
-      if(file !== item.file) {
+      if(img !== item.imgURL) {
         let photoRef = ref(storage, `${item.category}/${item.title}`)
         await deleteObject(photoRef)
         photoRef = ref(storage, `${category}/${title}`)
@@ -44,13 +40,11 @@ function EditForm({setEdit, item}) {
       }
       await updateDoc(
         doc(db, category, item.docID),
-        { title, price:parseInt(price), alc:parseInt(alc), explanation, category, file:JSON.stringify(file), imgURL: url }
+        { title, price:parseInt(price), alc:parseFloat(alc), explanation, category, imgURL: url }
       )
     }
     
     alert("등록됨")
-    setImg(null)
-    setFile(null)
     setEdit(prev=>!prev)
   }
 
@@ -77,8 +71,8 @@ function EditForm({setEdit, item}) {
         />
       </label>
       <label>알코올
-        <input 
-          type="number" 
+        <input
+          type="number"
           name="alc" 
           value={alc} 
           onChange={e=>setAlc(e.target.value)} 

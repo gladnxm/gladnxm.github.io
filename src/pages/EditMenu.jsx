@@ -55,7 +55,7 @@ function EditMenu() {
           return (
             <div className='item' key={i}>  
               <span>{item.title}</span>
-              <span>{item.alc && item.alc + '%'}</span>
+              <span>{item.alc ? item.alc + '%' : ''}</span>
               <span>{'￦' + item.price}</span>
               <FontAwesomeIcon
                 className='icon' 
