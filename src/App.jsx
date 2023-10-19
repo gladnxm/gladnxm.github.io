@@ -20,7 +20,6 @@ import Login from './pages/login';
 function Home() {
   let { tableNumber } = useParams()
   tableNumber = parseInt(tableNumber)
-  console.log(auth.currentUser)
   const dispatch = useDispatch()
   const [currentCategory, setCurrentCategory] = useState('cocktail')
   const [menu, setMenu] = useState([])

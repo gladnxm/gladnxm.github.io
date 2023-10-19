@@ -8,7 +8,6 @@ import { auth } from "../firebase"
 function Login() {
   let { tableNumber } = useParams()
   tableNumber = parseInt(tableNumber)
-  console.log("로그인페이지에서 테이블번호.. ", tableNumber)
   const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
