@@ -1,9 +1,69 @@
 /* eslint-disable react/prop-types */
-import "../style/EditForm.scss"
 import { useState } from "react";
 import { db, storage } from "../firebase";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore"
 import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage"
+import styled from "styled-components";
+
+const Form = styled.form`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #918383;
+  box-sizing: border-box;
+  padding: 20px;
+  z-index: 5;
+  label {
+    position: absolute;
+  }
+  label:nth-child(1) {
+    top: 0px;
+    left: 20px;
+  }
+  label:nth-child(2) {
+    top: 40px;
+    left: 20px;
+  }
+  label:nth-child(3) {
+    top: 80px;
+    left: 20px;
+  }
+  label:nth-child(4) {
+    top: 120px;
+    left: 20px;
+  }
+  label:nth-child(5) {
+    top: 200px;
+    left: 20px;
+  }
+  label:nth-child(6) {
+    top: 200px;
+    right: 0;
+  }
+  textarea {
+    width: 150px;
+    height: 40px;
+    resize: none;
+  }
+  img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 130px;
+  }
+  button {
+    position: absolute;
+    right: 0;
+    &:first-of-type {bottom: 30px;}
+    &:last-of-type {bottom: 0;}
+  }
+  input[type="file"] {
+    display: none;
+  }
+`
+
 
 function EditForm({setEdit, item}) {
   const [img, setImg] = useState(item ? item.imgURL : "");
@@ -49,7 +109,7 @@ function EditForm({setEdit, item}) {
   }
 
   return (
-    <form 
+    <Form 
       action="#" 
       className="editform" 
       onSubmit={onSubmit}
@@ -110,7 +170,7 @@ function EditForm({setEdit, item}) {
       {img && <img src={img} alt="미리보기" />}
       <button type="button" onClick={()=>setEdit(prev=>!prev)}>취소</button>
       <button type="submit">완료</button>
-    </form>
+    </Form>
   )
 }
 export default EditForm

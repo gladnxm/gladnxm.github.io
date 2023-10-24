@@ -2,7 +2,6 @@
 import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 
-// eslint-disable-next-line react/prop-types
 function Item({item}) {
   return (
     <div className='cart item'>  

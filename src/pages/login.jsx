@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate, Link, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { Form } from '../components/auth-components'
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "../firebase"

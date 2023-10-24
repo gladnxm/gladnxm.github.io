@@ -1,6 +1,5 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
-import { ref } from 'firebase/storage'
-import { db, storage } from './firebase'
+import { db } from './firebase'
 import { doc, updateDoc } from 'firebase/firestore'
 // 6은 테이블 갯수
 
@@ -66,7 +65,7 @@ const tableInfo = createSlice({
       })
 
       //orderState바꾸기 : 이로직 잘되면 밑에 setorede에 넣고 주문하는 페이지에서 setorede추가호출하는 방식으로가자
-      cart.forEach(item => state.orderStatus[tableNumber].push(`${item.title} --- ${item.count}개`)) 
+      cart.forEach(item => state.orderStatus[tableNumber].push(`${item.title} -- ${item.count}개`)) 
       state.cart[tableNumber] = [] // 장바구니 비우기
       state.orderList[tableNumber] = Object.values(merged) //주문내역 갱신
       updateDoc(
@@ -74,9 +73,6 @@ const tableInfo = createSlice({
         { list: [...state.orderStatus[tableNumber]] }
       )
       alert("주문완료됨")
-    },
-    setOrderState(state, action) {
-      //
     }
   }
 })

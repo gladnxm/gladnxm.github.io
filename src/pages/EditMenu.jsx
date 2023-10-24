@@ -4,8 +4,48 @@ import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import EditForm from "../components/EditForm";
-import "../style/EditMenu.scss"
 import { deleteObject, ref } from "firebase/storage";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  width: 700px;
+  height: 400px;
+  position: relative;
+  border: 1px solid #b0e691;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: scroll;
+  nav {
+    height: 50px;
+    display: flex;
+    gap: 10px;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #b0e691;
+    button { width: 70px; }
+  }
+`
+const Item = styled.div`
+  background-color: rgb(231, 225, 225);
+  width: 600px;
+  height: 40px;
+  line-height: 2.5;
+  span {display: inline-block;}
+  span:nth-of-type(1) {width: 250px;}
+  span:nth-of-type(2) {width: 70px;}
+  span:nth-of-type(3) {width: 80px;}
+  .icon {width: 40px;} 
+`
+const PlusBtn = styled.button`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  right: 20px;
+`
 
 function EditMenu() {
   const [currentCategory, setCurrentCategory] = useState('cocktail')
@@ -42,7 +82,7 @@ function EditMenu() {
 
   return (
     <>
-    <div className="edit-menu">
+    <Wrapper>
       <nav>
         <button onClick={()=>setCurrentCategory('cocktail')}>칵테일</button>
         <button onClick={()=>setCurrentCategory('beer')}>맥주</button>
@@ -53,7 +93,7 @@ function EditMenu() {
       {
         menu.map((item, i) => {
           return (
-            <div className='item' key={i}>  
+            <Item key={i}>  
               <span>{item.title}</span>
               <span>{item.alc ? item.alc + '%' : ''}</span>
               <span>{'￦' + item.price}</span>
@@ -67,14 +107,14 @@ function EditMenu() {
                 icon={faTrash} //삭제 휴지통아이콘 
                 onClick={() => remove(item)}
               />
-            </div>
+            </Item>
           )
         })
       }
-      <button className="plus" onClick={add}>
+      <PlusBtn onClick={add}>
         <FontAwesomeIcon className='icon' icon={faPlus} />
-      </button>
-    </div>
+      </PlusBtn>
+    </Wrapper>
     {edit && <EditForm setEdit={setEdit} item={selected} />}
     </>
   )

@@ -109,16 +109,14 @@ function Book() {
         </button>
       </div>      
       <Section>
-      {
-        menu.map((el, i) => {
-          return (
-            <Item key={i} coloring={userCollection[category].includes(el.title)} >
-              <img src={el.imgURL} alt="메뉴이미지" />
-              <p>{el.title}</p>
-            </Item>
-          )
-        })
-      }
+      {menu.map((el, i) => {
+        return (
+          <Item key={i} coloring={userCollection[category].includes(el.title)} >
+            <img src={el.imgURL} alt="메뉴이미지" />
+            <p>{el.title}</p>
+          </Item>
+        )
+      })}
       </Section> 
     </Wrapper> 
   )
