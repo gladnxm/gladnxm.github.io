@@ -8,6 +8,7 @@ import Book from './member-pages/Book';
 import CreateAccount from './pages/create-account';
 import Login from './pages/Login';
 import Chat from './pages/Chat';
+import Payment from './pages/Payment';
 function App() {
   return (
     <Routes>
@@ -24,13 +25,14 @@ function App() {
       } />
       <Route path='/:tableNumber' element={<Home/>}/>
       <Route path='/:tableNumber/cart' element={<Cart/>}/>
-      <Route path='/:tableNumber/orderList' element={<OrderList/>}/>
       <Route path='/:tableNumber/chat' element={<Chat/>}/>
+      <Route path='/:tableNumber/payment' element={<Payment/>}/>
+      <Route path='/:tableNumber/login' element={<Login/>}/>
+      <Route path='/:tableNumber/orderList' element={<OrderList/>}/>
+      <Route path='/:tableNumber/create-account' element={<CreateAccount/>}/>
       <Route path='/admin' element={<OrderStatus/>}/>
       <Route path='/edit' element={<EditMenu/>}/>
       <Route path='/book' element={<Book/>}/>
-      <Route path='/:tableNumber/login' element={<Login/>}/>
-      <Route path='/:tableNumber/create-account' element={<CreateAccount/>}/>
     </Routes>
   )
 }

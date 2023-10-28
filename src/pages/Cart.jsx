@@ -5,6 +5,17 @@ import { plusCount, minusCount, removeItem, addOrderList } from '../store.js'
 import '../style/Cart.scss'
 import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { auth, db } from "../firebase.js"
+import { useEffect, useState } from "react"
+import styled from "styled-components"
+
+const UsePoint = styled.div`
+  width: 200px;
+  height: 100px;
+  input[type="number"] {
+    width: 50px;
+  }
+
+`
 
 function Item({item, tableNumber}) {
   const dispatch = useDispatch()
@@ -25,13 +36,24 @@ function Item({item, tableNumber}) {
 }
 
 function Cart() {
-  const user = auth.currentUser
-  let { tableNumber } = useParams()
-  tableNumber = parseInt(tableNumber)
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  let { tableNumber } = useParams()
+  tableNumber = parseInt(tableNumber)
+  const user = null && auth.currentUser
   const cart = useSelector(state => state.tableInfo.cart[tableNumber])
-  
+  const [totalAmount, setTotalAmount] = useState(cart.reduce((acc, cur) => acc + cur.totalPrice, 0))
+  const [usedPoint, setUsedPoint] = useState(0)
+  const [havePoint, setHavePoint] = useState(0)
+
+  useEffect(()=>{
+    (async()=>{
+      if(user === null) return
+      let p = await getDoc(doc(db, 'UserPoint', user.uid))
+      p = p.data()['myPoint']
+      setHavePoint(p)
+    })()
+  }, [])
   const updateCollection = async () => {
     const ref = doc(db, 'UserCollection', user.uid)
     let collection = await getDoc(ref)
@@ -40,6 +62,20 @@ function Cart() {
     for (let category in collection) 
       collection[category] = [...new Set(collection[category])];    
     updateDoc(ref, collection)
+  }
+  const order = async() => {
+    if(user) {
+      await updateDoc(
+        doc(db, 'UserPoint', user.uid),
+        {myPoint:havePoint-usedPoint}
+      )
+      updateCollection()
+    }
+    await updateDoc(
+      doc(db, "OrderState", tableNumber), 
+      {totalAmount: totalAmount- usedPoint}
+    )
+    dispatch(addOrderList({ cart: [...cart], tableNumber }))
   }
   return (
     <>   
@@ -53,15 +89,28 @@ function Cart() {
       { cart.map((item, i) => <Item item={item} tableNumber={tableNumber} key={i} />) }
       
       <span className="cart total">
-      { `합계 : ￦${cart.reduce((acc, cur) => acc + cur.totalPrice, 0)}` }      
+      {`합계 : ￦${totalAmount - usedPoint}`}      
+      {/* {`합계 : ￦${cart.reduce((acc, cur) => acc + cur.totalPrice, 0)}`}       */}
       </span>      
+      
+      {
+        user && (
+          <UsePoint>
+            <p>보유 포인트 : {havePoint}</p>
+            <span>포인트 사용 : </span>
+            <input 
+              type="number"
+              max={havePoint}
+              value={usedPoint}
+              onChange={e=>setUsedPoint(parseInt(e.target.value))}
+            />
+          </UsePoint>
+        )
+      }
 
       <footer className="cart footer">
         <button onClick={()=>navigate(-1)}>뒤로가기</button>
-        <button onClick={()=>{
-          dispatch(addOrderList({ cart: [...cart], tableNumber }))
-          updateCollection()
-        }}>주문하기
+        <button onClick={order}>주문하기
         </button>
       </footer>
     </>

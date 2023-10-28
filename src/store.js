@@ -48,7 +48,6 @@ const tableInfo = createSlice({
       handleCartItem(state, action, null);
     },
     addOrderList(state, action) {
-      console.log("addorder 실행")
       const { cart, tableNumber } = action.payload
       let orderList = state.orderList[tableNumber]
       const tempOrderList = [...orderList, ...cart]
@@ -73,6 +72,14 @@ const tableInfo = createSlice({
         { list: [...state.orderStatus[tableNumber]] }
       )
       alert("주문완료됨")
+    },
+    clearTable(state, action) {
+      //액션에 테이블번호만 전해주면 알아서 비우게끔
+      const {tableNumber} = action.payload
+      state.orderList[tableNumber] = []
+      state.orderStatus[tableNumber] = []
+      // db에서 orderstate, chatting 비우기
+      updateDoc()
     }
   }
 })
@@ -82,7 +89,8 @@ export const {
   plusCount, 
   minusCount, 
   removeItem,
-  addOrderList
+  addOrderList,
+  clearTable
 } = tableInfo.actions
 
 export default configureStore({

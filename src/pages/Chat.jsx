@@ -15,6 +15,7 @@ const Wrapper = styled.div`
   header {
     height: 60px;
     text-align: center;
+    border-bottom: 1px solid #000;
   }
   input {
     width: 80%;
@@ -67,9 +68,7 @@ function Chat() {
         : <header>직원 도움이 필요하신가요?<br/>메세지를 남겨주세요</header>
       }
       <ChatBox>
-      {
-        chatting[tableNumber].map((text, i) => <span key={i}>{text}</span>)
-      }
+      {chatting[tableNumber].map((text, i) => <span key={i}>{text}</span>)}
       </ChatBox>
       <input 
         type="text" 
