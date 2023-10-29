@@ -69,6 +69,17 @@ return안에서 바로 직접 불러오면 안되는거였음 왜그런지 이�
 수정 컴포넌트가 재랜더링 될떄마다 파일 state가 null로 초기화되는데
 이미지를 수정안하고 냅두니까 이미지 파일의 state값인 null이 다시 쓰이는거라 그런거였음
 
+6. 잘되던 주문하기 기능이 약간의 로직만 덧붙이니 안된다
+로직에 전혀 문제없어 보였다 한참을 오래 헤멨다
+에러메시지도 TypeError: n.indexOf is not a function 라고만 뜨는데
+n이라는 변수 자체가 없어서 뭔소린가 했다
+updateDoc(
+  doc(db, "OrderState", tableNumber) 여기가 문제였다
+  {'totalAmount': totalAmount- usedPoint}
+) 
+`${tableNumber}`로 바꾸니 해결됐다
+문서의 아이디가 tableNumber값이 맞기는한데 0 1 2가 아닌 '0' '1' '2'로 했어야했다
+그래서 doc()에 문서id가 잘못 들어간 셈이 된거라 계속 에러가 났던것
 
 
 

@@ -64,7 +64,7 @@ function Chat() {
     <Wrapper>
       {
         who === "직원"
-        ? <header>{tableNumber}번 테이블과 채팅</header>
+        ? <header>{tableNumber+1}번 테이블과 채팅</header>
         : <header>직원 도움이 필요하신가요?<br/>메세지를 남겨주세요</header>
       }
       <ChatBox>

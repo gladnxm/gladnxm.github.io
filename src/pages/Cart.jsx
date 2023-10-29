@@ -63,17 +63,19 @@ function Cart() {
       collection[category] = [...new Set(collection[category])];    
     updateDoc(ref, collection)
   }
-  const order = async() => {
+  const order = () => {
+    console.log("오더함수실행")
+    console.log(user)
     if(user) {
-      await updateDoc(
+      updateDoc(
         doc(db, 'UserPoint', user.uid),
-        {myPoint:havePoint-usedPoint}
+        {'myPoint':havePoint-usedPoint}
       )
       updateCollection()
     }
-    await updateDoc(
-      doc(db, "OrderState", tableNumber), 
-      {totalAmount: totalAmount- usedPoint}
+    updateDoc(
+      doc(db, "OrderState", `${tableNumber}`), 
+      {'totalAmount': totalAmount- usedPoint}
     )
     dispatch(addOrderList({ cart: [...cart], tableNumber }))
   }
@@ -91,8 +93,7 @@ function Cart() {
       <span className="cart total">
       {`합계 : ￦${totalAmount - usedPoint}`}      
       {/* {`합계 : ￦${cart.reduce((acc, cur) => acc + cur.totalPrice, 0)}`}       */}
-      </span>      
-      
+      </span>     
       {
         user && (
           <UsePoint>
@@ -107,11 +108,9 @@ function Cart() {
           </UsePoint>
         )
       }
-
       <footer className="cart footer">
         <button onClick={()=>navigate(-1)}>뒤로가기</button>
-        <button onClick={order}>주문하기
-        </button>
+        <button onClick={order}>주문하기</button>
       </footer>
     </>
   )

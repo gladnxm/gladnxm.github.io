@@ -78,7 +78,8 @@ function Home() {
   const [menu, setMenu] = useState([])
   const [showDetail, setShowDetail] = useState(false)
   const [selected, setSelected] = useState(null) //돋보기 클릭한거. state아닌 일반변수로 하면 작동안함.
-  console.log(auth.currentUser)
+  console.log("홈에서..", auth.currentUser)
+
   useEffect(()=>{
     const fetchMenu = async() => {
       const menuQuery = query(collection(db, currentCategory))
