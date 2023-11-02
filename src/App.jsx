@@ -6,9 +6,10 @@ import Cart from './pages/Cart.jsx'
 import EditMenu from './pages/EditMenu';
 import Book from './member-pages/Book';
 import CreateAccount from './pages/create-account';
-import Login from './pages/Login';
 import Chat from './pages/Chat';
 import Payment from './pages/Payment';
+import Login from './pages/login';
+
 function App() {
   return (
     <Routes>

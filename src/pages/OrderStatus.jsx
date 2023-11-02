@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-import { useSelector } from "react-redux"
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react"
 import { collection, onSnapshot, query } from "firebase/firestore"
@@ -29,16 +28,15 @@ const Box = styled.div`
     &:first-of-type {right: 0;}
     &:last-of-type {right: 50px;}
   }
-
 `
 const GoBack = styled.button`
   position: relative;
   right: -20px;
 `
-
 const Span = styled.span`
   color: ${props => props.isRed ? 'red' : 'green'};
 `
+
 function Item({item}) {
   const [isRed, setIsRed] = useState(true)
   return <Span isRed={isRed} onClick={()=>setIsRed(prev=>!prev)}>{item}</Span>
@@ -58,6 +56,12 @@ function OrderStatus() {
       unsubscribe && unsubscribe() 
     }
   }, [])
+  // useEffect(()=>{
+  //   onSnapshot(
+  //     query(collection(db, "OrderState")), 
+  //     snapshot => setTables(snapshot.docs.map(doc => doc.data()['list']))        
+  //   )    
+  // }, [])
 
   return ( 
     <Wrapper>

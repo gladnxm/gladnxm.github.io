@@ -4,18 +4,19 @@ import { Form } from '../components/auth-components'
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "../firebase"
 
-
 function Login() {
   let { tableNumber } = useParams()
   tableNumber = parseInt(tableNumber)
   const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
   const onSubmit = async e => {
     e.preventDefault()
     await signInWithEmailAndPassword(auth, email, password) 
     navigate(`/${tableNumber}`)
   }
+
   return (
     <>
     <Form action="#" onSubmit={onSubmit}>

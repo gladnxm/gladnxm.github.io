@@ -1,31 +1,46 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping, faMagnifyingGlassPlus } from '@fortawesome/free-solid-svg-icons';
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { collection, getDocs, query } from "firebase/firestore"
 import { auth, db } from "../firebase"
 import { addItemToCart } from '../store.js';
 import Detail from '../components/Detail.jsx';
 import styled from 'styled-components';
+import { 
+  faCartShopping, 
+  faCartPlus, 
+  faMagnifyingGlass, 
+  faList,
+  faBook, 
+  faComments, 
+  faInfo,
+  faCircleInfo
+} from '@fortawesome/free-solid-svg-icons';
 
 const Nav = styled.nav`
   width: 100%;
-  position: sticky;
+  height: 17vh;
+  /* position: sticky;
+  top: 0; */
   display: flex;
   flex-wrap: wrap;
-  top: 0;
-  gap: 20px;
   justify-content: space-around;
-  background-color: #b0e691;
+  background-color: #EDF0F2;
   * {
     width: 25%;
     height: 40px;
+    margin: 10px;
+    border-radius: 15px;
+    border: none;
+    color: #b159a9;
+    background-color: #fff;
   }
   p {
     text-align: center;
-    margin: 0;
     line-height: 2.5;
+    color: #000;
+    background-color: transparent;
   }
 `
 const Item = styled.div`
@@ -33,7 +48,7 @@ const Item = styled.div`
   height: 60px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #b0e691;  
+  background-color: #EDF0F2;
   * {
     margin-top: 20px;
     &:nth-child(1) { width: 140px; }
@@ -45,28 +60,53 @@ const Item = styled.div`
   .icon:hover { cursor: pointer; }
 `
 const MenuBox = styled.div`
-  height: 460px;
+  height: 67vh;  
+  /* border-bottom: 1px solid #000; */
   overflow-y: scroll;
+  * {
+    color: #424242;
+  }
 `
 const Footer = styled.footer`
   width: 100%;
-  height: 100px;
-  position: fixed;
+  height: 16vh;
+  background-color: #EDF0F2;
   display: flex;
-  flex-wrap: wrap;
-  bottom: 0;
-  * {
+  /* border-bottom: 1px solid #000; */
+  button {
+    height: 100%;
+    background-color: #fff;
     box-sizing: border-box;
     cursor: pointer;
     display: block;
-    width: 50%;
-    height: 50px;
-    background-color: #b0e691;
     text-align: center;
-    text-decoration: none;
     color: black;
-    line-height: 3;
-    border: 1px solid black;
+    border: none;
+    flex-grow: 1;
+    flex-basis: 0;
+    &:first-child { 
+      border-top-left-radius: 40px; 
+      color: #67a6a8;
+    }
+    &:nth-child(2) {
+      color: #5eca70;
+    }
+    &:nth-child(3) {
+      color: #534983;
+    }
+    &:last-child { 
+      border-top-right-radius: 40px; 
+      color: #e6af5d;
+    }
+    /* * { color: #b159a9; } */
+    .icon {
+      margin-top: 15px;
+      font-size: 26px; 
+    }
+    p { 
+      font-size: 16px; 
+      margin-bottom: 0;
+    }
   }
 `
 
@@ -74,6 +114,7 @@ function Home() {
   let { tableNumber } = useParams()
   tableNumber = parseInt(tableNumber)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [currentCategory, setCurrentCategory] = useState('cocktail')
   const [menu, setMenu] = useState([])
   const [showDetail, setShowDetail] = useState(false)
@@ -98,7 +139,7 @@ function Home() {
       <button onClick={()=>setCurrentCategory('wine')}>와인</button>
       <button onClick={()=>setCurrentCategory('whiskey')}>위스키</button>
       <button onClick={()=>setCurrentCategory('dish')}>안주</button>
-      <p><Link to='/book'> Table {tableNumber + 1} </Link></p>
+      <p>Table {tableNumber + 1}</p>
     </Nav> 
     <MenuBox>
     {
@@ -109,16 +150,16 @@ function Home() {
               <span>{item.alc ? item.alc + '%' : ''}</span>
               <span>{'￦' + item.price}</span>
               <FontAwesomeIcon
-                className='home icon' 
-                icon={faMagnifyingGlassPlus} 
+                className='icon' 
+                icon={faCircleInfo} 
                 onClick={()=>{
                   setSelected(item)
                   setShowDetail(prev=>!prev)
                 }}
               />
               <FontAwesomeIcon 
-                className='home icon' 
-                icon={faCartShopping} 
+                className='icon' 
+                icon={faCartPlus} 
                 onClick={()=>{
                   const temp = {
                     title: item.title,
@@ -137,10 +178,32 @@ function Home() {
     }
     </MenuBox>
     <Footer>
-      {auth.currentUser ? <Link to="/book">도감</Link> : <div />}
-      <Link to={`/${tableNumber}/chat`}>채팅 문의</Link>
+      {
+        auth.currentUser ?
+        (
+          <button onClick={()=>navigate("/book")}>
+            <FontAwesomeIcon className='icon' icon={faBook}/>
+            <p>도감</p>
+          </button>
+        ) :
+        <div />
+      }      
+      <button onClick={()=>navigate(`/${tableNumber}/chat`)}>
+        <FontAwesomeIcon className='icon' icon={faComments}/>
+        <p>채팅문의</p>
+      </button>
+      <button onClick={()=>navigate(`/${tableNumber}/orderList`)}>
+        <FontAwesomeIcon className='icon' icon={faList}/>
+        <p>주문내역</p>
+      </button>
+      <button onClick={()=>navigate(`/${tableNumber}/cart`)}>
+        <FontAwesomeIcon className='icon' icon={faCartShopping}/>
+        <p>장바구니</p>
+      </button>
+       
+      {/* <Link to={`/${tableNumber}/chat`}>채팅 문의</Link>
       <Link to={`/${tableNumber}/orderList`}>주문 내역</Link>
-      <Link to={`/${tableNumber}/cart`}>장바구니</Link>
+      <Link to={`/${tableNumber}/cart`}>장바구니</Link> */}
     </Footer>
     {showDetail && <Detail item={selected} setShowDetail={setShowDetail} />}
     </>

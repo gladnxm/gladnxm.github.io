@@ -40,7 +40,7 @@ function Chat() {
   tableNumber = parseInt(tableNumber)
   const [chatting, setChatting] = useState(null)
   const [message, setMessage] = useState("")
-  const who = auth.currentUser ? "직원" : "손님"
+  const who = (auth.currentUser.uid === "749DMpmSITalUBJA7sykxHAFmVY2") ? "직원" : "손님"
 
   const sendMessage = () => {    
     updateDoc(
