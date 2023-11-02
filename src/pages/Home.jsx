@@ -35,10 +35,11 @@ const Nav = styled.nav`
     border: none;
     color: #b159a9;
     background-color: #fff;
+    font-size: 14px;
   }
   p {
     text-align: center;
-    line-height: 2.5;
+    line-height: 3;
     color: #000;
     background-color: transparent;
   }
@@ -66,6 +67,12 @@ const MenuBox = styled.div`
   * {
     color: #424242;
   }
+  div:nth-child(odd) {
+  }
+  div:nth-child(even) {
+    background-color: #f8f8f8;
+    /* *{color: #b159a9;} */
+  }
 `
 const Footer = styled.footer`
   width: 100%;
@@ -84,20 +91,25 @@ const Footer = styled.footer`
     border: none;
     flex-grow: 1;
     flex-basis: 0;
-    &:first-child { 
-      border-top-left-radius: 40px; 
-      color: #67a6a8;
+    &:nth-child(1) { 
+      color: #d85c5c;
     }
     &:nth-child(2) {
-      color: #5eca70;
+      color: #e6af5d;
     }
     &:nth-child(3) {
-      color: #534983;
+      color: #5eca70;
+    }
+    &:nth-child(4) { 
+      color: #70c7bb;
+    }
+    &:first-child { 
+      border-top-left-radius: 40px; 
     }
     &:last-child { 
       border-top-right-radius: 40px; 
-      color: #e6af5d;
     }
+
     /* * { color: #b159a9; } */
     .icon {
       margin-top: 15px;
@@ -179,14 +191,13 @@ function Home() {
     </MenuBox>
     <Footer>
       {
-        auth.currentUser ?
+        auth.currentUser &&
         (
           <button onClick={()=>navigate("/book")}>
             <FontAwesomeIcon className='icon' icon={faBook}/>
             <p>도감</p>
           </button>
-        ) :
-        <div />
+        )
       }      
       <button onClick={()=>navigate(`/${tableNumber}/chat`)}>
         <FontAwesomeIcon className='icon' icon={faComments}/>
