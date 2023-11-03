@@ -37,6 +37,19 @@ const ChatBox = styled.div`
   padding: 10px;
   border: 1px solid #60c6d8;
   @media (min-width: 500px) { height: 300px; }
+  .me, .you {
+    padding: 7px;
+    color: #312268;
+    width: max-content;
+  }
+  .me {
+    background-color: #e6e6e6;
+    margin-left: auto;
+  }
+  .you {
+    border: 1px solid #e6e6e6;
+    margin-right: auto;
+  }
 `
 const Footer = styled.footer`
   display: flex;
@@ -74,9 +87,16 @@ function Chat() {
   const sendMessage = () => {    
     updateDoc(
       doc(db, "Chatting", `${tableNumber}`),
-      { list: [...chatting[tableNumber], `${who} : ${message}`] }
+      { list: [...chatting[tableNumber], `${who}:${message}`] }
     )
     setMessage("")
+  }
+
+  const naming = msg => {    
+    if(who === "손님") 
+      return msg.includes("손님") ? "me" : "you"
+    else if(who === "직원") 
+      return msg.includes("직원") ? "me" : "you"   
   }
 
   useEffect(()=>{
@@ -93,17 +113,32 @@ function Chat() {
     <Wrapper>
     <main>
       <Header>
-        <FontAwesomeIcon className="icon" icon={faArrowLeft} onClick={()=>navigate(-1)} />
+        <FontAwesomeIcon 
+          className="icon" 
+          icon={faArrowLeft} 
+          onClick={()=>navigate(-1)} 
+        />
         {
           who === "직원"
           ? <span>{tableNumber+1}번 테이블과 채팅</span>
           : <span>직원 도움이 필요하신가요?<br/>메세지를 남겨주세요</span>
         }
-        <FontAwesomeIcon className="icon" icon={faArrowLeft} />
+        <FontAwesomeIcon 
+          className="icon" 
+          icon={faArrowLeft} 
+        />
       </Header>
       
       <ChatBox who={who}>
-      {chatting[tableNumber].map((text, i) => <span key={i}>{text}</span>)}
+      {
+        chatting[tableNumber].map((msg, i) => {
+          return (
+            <span className={naming(msg)} key={i}>
+            {msg.split(':')[1]}
+            </span>
+          )
+        })
+      }
       </ChatBox>
       
       <Footer>
