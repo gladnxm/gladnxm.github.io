@@ -63,8 +63,6 @@ const Form = styled.form`
     display: none;
   }
 `
-
-
 function EditForm({setEdit, item}) {
   const [img, setImg] = useState(item ? item.imgURL : "");
   const [file, setFile] = useState(null);
@@ -102,8 +100,7 @@ function EditForm({setEdit, item}) {
         doc(db, category, item.docID),
         { title, price:parseInt(price), alc:parseFloat(alc), explanation, category, imgURL: url }
       )
-    }
-    
+    }    
     alert("등록됨")
     setEdit(prev=>!prev)
   }
