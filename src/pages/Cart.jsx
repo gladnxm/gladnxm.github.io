@@ -1,49 +1,53 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import { plusCount, minusCount, removeItem, addOrderList } from '../store.js'
-import '../style/Cart.scss'
+import { addOrderList } from '../store.js'
 import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { auth, db } from "../firebase.js"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
+import Header from "../components/Header";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import CartItem from "../components/CartItem.jsx"
 
+const Wrapper = styled.div`
+  header .icon:last-of-type { opacity:0; }
+`
 const UsePoint = styled.div`
   width: 200px;
   height: 100px;
-  input[type="number"] {
-    width: 50px;
-  }
-
+  p { margin-bottom: 10px; }
+  input { width: 50px; }
 `
+const Footer = styled.footer`
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  button {
+    background-color: #fff;
+    border: 1px dashed #60c6d8;
+    width: 140px;
+    height: 100%;
+    font-size: 16px;
+  }
+  p {
+    font-size: 18px;
 
-function Item({item, tableNumber}) {
-  const dispatch = useDispatch()
-  return (
-    <div className='cart item'>  
-      <span>{item.title}</span>
-      <span>{item.alc && item.alc + '%'}</span>
-      <span>{'￦' + item.totalPrice}</span>
-
-      <div className="control">
-        <button className="minus" onClick={() => dispatch(minusCount({ item, tableNumber }))}>-</button>
-        <span>{item.count}</span>
-        <button className="plus" onClick={() => dispatch(plusCount({ item, tableNumber }))}>+</button>
-        <button className="remove" onClick={() => dispatch(removeItem({ item, tableNumber }))}>X</button>
-      </div>
-    </div>
-  )
-}
-
+  }
+`
 function Cart() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   let { tableNumber } = useParams()
   tableNumber = parseInt(tableNumber)
-  const user = null && auth.currentUser
+  const user = auth.currentUser || null
   const cart = useSelector(state => state.tableInfo.cart[tableNumber])
-  const [totalAmount, setTotalAmount] = useState(cart.reduce((acc, cur) => acc + cur.totalPrice, 0))
-  const [usedPoint, setUsedPoint] = useState(0)
+  const [totalAmount, setTotalAmount] = useState(0)
+  const [usedPoint, setUsedPoint] = useState("")
   const [havePoint, setHavePoint] = useState(0)
 
   useEffect(()=>{
@@ -54,6 +58,11 @@ function Cart() {
       setHavePoint(p)
     })()
   }, [])
+
+  useEffect(()=>{
+    setTotalAmount(cart.reduce((acc, cur) => acc + cur.totalPrice, 0))
+  }, [cart])
+
   const updateCollection = async () => {
     const ref = doc(db, 'UserCollection', user.uid)
     let collection = await getDoc(ref)
@@ -63,9 +72,13 @@ function Cart() {
       collection[category] = [...new Set(collection[category])];    
     updateDoc(ref, collection)
   }
+
   const order = () => {
-    console.log("오더함수실행")
-    console.log(user)
+    if(havePoint < usedPoint) {
+      alert("사용하려는 포인트가 보유포인트보다 큽니다.")
+      setUsedPoint("")
+      return
+    }
     if(user) {
       updateDoc(
         doc(db, 'UserPoint', user.uid),
@@ -78,41 +91,40 @@ function Cart() {
       {'totalAmount': totalAmount- usedPoint}
     )
     dispatch(addOrderList({ cart: [...cart], tableNumber }))
+    setHavePoint(prev=>prev-usedPoint)
+    setUsedPoint("")
+    setTotalAmount(0)
   }
+
   return (
-    <>   
-      <header className="cart header">
-        <span>이름</span>
-        <span>도수</span>
-        <span>가격</span>
-        <span>수량</span>
-        <span>삭제</span>
-      </header>
-      { cart.map((item, i) => <Item item={item} tableNumber={tableNumber} key={i} />) }
+    <Wrapper>         
+      <Header>
+        <FontAwesomeIcon className="icon" icon={faArrowLeft} onClick={()=>navigate(-1)} />
+        <span>장바구니</span>
+        <FontAwesomeIcon className="icon" icon={faQuestionCircle} />
+      </Header>
+      { cart.map((item, i) => <CartItem item={item} tableNumber={tableNumber} key={i} />) }
       
       <span className="cart total">
-      {`합계 : ￦${totalAmount - usedPoint}`}      
-      {/* {`합계 : ￦${cart.reduce((acc, cur) => acc + cur.totalPrice, 0)}`}       */}
+      
       </span>     
-      {
-        user && (
-          <UsePoint>
-            <p>보유 포인트 : {havePoint}</p>
-            <span>포인트 사용 : </span>
-            <input 
-              type="number"
-              max={havePoint}
-              value={usedPoint}
-              onChange={e=>setUsedPoint(parseInt(e.target.value))}
-            />
-          </UsePoint>
-        )
-      }
-      <footer className="cart footer">
-        <button onClick={()=>navigate(-1)}>뒤로가기</button>
+      {user && (
+        <UsePoint>
+          <p>보유 포인트 : {havePoint}</p>
+          <span>포인트 사용 : </span>
+          <input 
+            type="number"
+            max={havePoint}
+            value={usedPoint}
+            onChange={e=>setUsedPoint(parseInt(e.target.value || 0))}
+          />
+        </UsePoint>
+      )}
+      <Footer>
         <button onClick={order}>주문하기</button>
-      </footer>
-    </>
+        <p>{`주문 금액 : ￦${totalAmount - usedPoint}`}</p>
+      </Footer>
+    </Wrapper>
   )
 }
 export default Cart

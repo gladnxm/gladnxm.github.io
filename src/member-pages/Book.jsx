@@ -5,24 +5,12 @@ import styled, {css} from "styled-components"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
+import Header from "../components/Header";
 
 const Wrapper = styled.div`
   width: 100%;
 `
-const Header = styled.header`
-  margin-top: 20px;
-  display: flex;
-  justify-content: space-between;
-  height: 50px;
-  span {
-    font-size: 18px;
-    font-weight: bold;
-  }
-  .icon {
-    
-    font-size: 24px;
-  }
-`
+
 const Nav = styled.nav`
   display: flex;
   justify-content: space-around;

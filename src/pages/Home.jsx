@@ -15,7 +15,8 @@ import {
   faBook, 
   faComments, 
   faInfo,
-  faCircleInfo
+  faCircleInfo,
+  faBagShopping
 } from '@fortawesome/free-solid-svg-icons';
 
 const Nav = styled.nav`
@@ -62,17 +63,10 @@ const Item = styled.div`
 `
 const MenuBox = styled.div`
   height: 67vh;  
-  /* border-bottom: 1px solid #000; */
   overflow-y: scroll;
-  * {
-    color: #424242;
-  }
-  div:nth-child(odd) {
-  }
-  div:nth-child(even) {
-    background-color: #f8f8f8;
-    /* *{color: #b159a9;} */
-  }
+  * {    color: #424242;  }
+  div:nth-child(even) {    background-color: #f8f8f8;  }
+  .icon { font-size: 22px; }
 `
 const Footer = styled.footer`
   width: 100%;
@@ -171,7 +165,7 @@ function Home() {
               />
               <FontAwesomeIcon 
                 className='icon' 
-                icon={faCartPlus} 
+                icon={faCartShopping} 
                 onClick={()=>{
                   const temp = {
                     title: item.title,
@@ -208,7 +202,7 @@ function Home() {
         <p>주문내역</p>
       </button>
       <button onClick={()=>navigate(`/${tableNumber}/cart`)}>
-        <FontAwesomeIcon className='icon' icon={faCartShopping}/>
+        <FontAwesomeIcon className='icon' icon={faBagShopping}/>
         <p>장바구니</p>
       </button>
        
