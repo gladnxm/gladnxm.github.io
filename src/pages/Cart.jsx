@@ -6,13 +6,16 @@ import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { auth, db } from "../firebase.js"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
-import Header from "../components/Header";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import CartItem from "../components/CartItem.jsx"
+import { HeaderStyles } from "../components/commonStyle.js"
 
 const Wrapper = styled.div`
-  header .icon:last-of-type { opacity:0; }
+`
+const Header = styled.header`
+  ${HeaderStyles}
+  .icon:last-of-type { opacity:0; }
 `
 const UsePoint = styled.div`
   width: 200px;
@@ -34,10 +37,7 @@ const Footer = styled.footer`
     height: 100%;
     font-size: 16px;
   }
-  p {
-    font-size: 18px;
-
-  }
+  p { font-size: 18px; }
 `
 function Cart() {
   const navigate = useNavigate()
@@ -101,7 +101,7 @@ function Cart() {
       <Header>
         <FontAwesomeIcon className="icon" icon={faArrowLeft} onClick={()=>navigate(-1)} />
         <span>장바구니</span>
-        <FontAwesomeIcon className="icon" icon={faQuestionCircle} />
+        <FontAwesomeIcon className="icon" icon={faArrowLeft} />
       </Header>
       { cart.map((item, i) => <CartItem item={item} tableNumber={tableNumber} key={i} />) }
       

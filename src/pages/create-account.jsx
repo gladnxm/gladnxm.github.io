@@ -9,7 +9,6 @@ import { faL } from "@fortawesome/free-solid-svg-icons"
 function CreateAccount() {
   let { tableNumber } = useParams()
   tableNumber = parseInt(tableNumber)
-  console.log("가입페이지에서 테이블번호.. ", tableNumber)
   const navigate = useNavigate()
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")

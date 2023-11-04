@@ -4,29 +4,26 @@ import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { auth, db } from "../firebase"
 import { collection, doc, onSnapshot, query, updateDoc } from "firebase/firestore"
-import Header from "../components/Header";
+import { HeaderStyles, WrapperStyles } from "../components/commonStyle";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const Wrapper = styled.div`
+  ${WrapperStyles}
+  * {box-sizing: border-box;}  
+`
+const Main = styled.main`
   width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  header .icon:last-of-type { opacity:0; }
-  main {
-    width: 100%;
-    height: 100%;
-    padding: 10px;
-  }
-  * {box-sizing: border-box;}
-  @media (min-width: 500px) {    
-    main { /* 화면 폭이 500 이상인 경우에만 적용 */
-      width: 400px;
-      height: 500px;
-    }
-  }  
+  height: 100%;
+  padding: 10px;
+  @media (min-width: 500px) {      
+    width: 400px;
+    height: 500px;    
+  }  /* 화면 폭이 500 이상인 경우에만 적용 */
+`
+const Header = styled.header`
+  ${HeaderStyles}
+  .icon:last-of-type { opacity:0; }
 `
 const ChatBox = styled.div`
   display: flex;
@@ -111,7 +108,7 @@ function Chat() {
   //에러나면 state바꾼다고 재렌더링 되지않음 걍거기서 멈추게됨 그래서 일단 에러안나게 해야함
   return (
     <Wrapper>
-    <main>
+    <Main>
       <Header>
         <FontAwesomeIcon 
           className="icon" 
@@ -121,7 +118,7 @@ function Chat() {
         {
           who === "직원"
           ? <span>{tableNumber+1}번 테이블과 채팅</span>
-          : <span>직원 도움이 필요하신가요?<br/>메세지를 남겨주세요</span>
+          : <span>직원 도움이 필요하신가요?</span>
         }
         <FontAwesomeIcon 
           className="icon" 
@@ -152,7 +149,7 @@ function Chat() {
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
         </svg>
       </Footer>
-    </main>
+    </Main>
     </Wrapper>
   )
 }

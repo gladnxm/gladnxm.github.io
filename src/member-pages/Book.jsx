@@ -5,12 +5,14 @@ import styled, {css} from "styled-components"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
+import { HeaderStyles } from "../components/commonStyle";
 
 const Wrapper = styled.div`
   width: 100%;
 `
-
+const Header = styled.header`
+  ${HeaderStyles}
+`
 const Nav = styled.nav`
   display: flex;
   justify-content: space-around;
@@ -41,18 +43,9 @@ const Btns = styled.div`
     display: block;
     width: 110px;
     height: 40px;
-    /* margin-bottom: 8px; */
-    &:nth-of-type(1) {
-      top: 0;
-    }
-    &:nth-of-type(2) {
-      top: 45px;
-      
-    }
-    &:nth-of-type(3) {
-      top: 90px;
-
-    }
+    &:nth-of-type(1) { top: 0; }
+    &:nth-of-type(2) { top: 45px; }
+    &:nth-of-type(3) { top: 90px; }
   }
 `
 const Section = styled.section`
@@ -62,7 +55,6 @@ const Section = styled.section`
 `
 const Item = styled.div`
   width: 50%;
-  /* flex-grow: .5; */
   text-align: center;
   border: 1px solid #b4b4b4;
   box-sizing: border-box;
