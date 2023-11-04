@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
-import styled, {css} from "styled-components"
-import { HeaderStyles } from "../components/commonStyle";
+import styled from "styled-components"
+import { HeaderStyles, OrderListStyles } from "../components/commonStyle";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
@@ -12,42 +12,23 @@ const Wrapper = styled.div`
     font-size: 20px; 
   }
 `
-const Ho = styled.div`
-  width: 100%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  background-color: #666;
-  span {
-    text-align: center;
-    &:nth-child(1) { flex: 5; }
-    &:nth-child(2) { flex: 1; }
-    &:nth-child(3) { flex: 1; }
-    &:nth-child(4) { flex: 2; }
-  }
-`
-const List = styled.div`
-  
-`
 const Header = styled.header`
   ${HeaderStyles}
   .icon:last-of-type { opacity:0; }
 `
+const TableHeader = styled.div`
+  ${OrderListStyles}
+  font-weight: bold;
+`
+const List = styled.div`
+  div:last-of-type { border-bottom: none; } 
+`
 
 function Item({item}) {
   const Item = styled.div`
-    width: 100%;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    background-color: #666;
-    span {
-      text-align: center;
-      &:nth-child(1) { flex: 5; text-align: left; }
-      &:nth-child(2) { flex: 1; }
-      &:nth-child(3) { flex: 1; }
-      &:nth-child(4) { flex: 2; }
-    }
+    ${OrderListStyles}
+    span:first-child { text-align: left; }
+    border-bottom: 1px dashed #8bd2df;    
   `
   return (
     <Item>  
@@ -72,23 +53,14 @@ function OrderList() {
         <span>주문 내역</span>
         <FontAwesomeIcon className="icon" icon={faArrowLeft} />      
       </Header>
-
-      <Ho>
+      <TableHeader>
         <span>이름</span>
         <span>도수</span>
         <span>수량</span>
         <span>가격</span>
-      </Ho>
-
-      <List> 
-        {/* list태그자체는 불필요해보임 */}
-      { orderList.map((item, i) => <Item item={item} key={i} />) }
-      </List>
-      
-      <p>
-      { `합계 : ￦${orderList.reduce((acc, cur) => acc + cur.totalPrice, 0)}` }
-      </p>      
-
+      </TableHeader>
+      <List>{orderList.map((item, i) => <Item item={item} key={i} />)}</List>      
+      <p>{`합계 : ￦${orderList.reduce((acc, cur) => acc + cur.totalPrice, 0)}`}</p>    
     </Wrapper>
   )
 }

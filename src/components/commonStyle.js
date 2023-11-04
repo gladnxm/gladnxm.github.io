@@ -20,4 +20,20 @@ const HeaderStyles = css`
     font-size: 24px;
   }
 `
-export { WrapperStyles, HeaderStyles }
+const OrderListStyles = css`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 20px 0;
+  span {
+    text-align: center;
+    &:nth-child(1) { flex: 5; }
+    &:nth-child(2) { flex: 1; }
+    &:nth-child(3) { flex: 1; }
+    &:nth-child(4) { flex: 2; }
+  }
+`
+
+export { WrapperStyles, HeaderStyles, OrderListStyles }

@@ -135,7 +135,14 @@ function Home() {
       setMenu(temp)
     }
     fetchMenu()
-  }, [currentCategory])
+    /*
+    홈에서 메뉴목록 불러오면 마운트될때마다 계속됨
+    최초 1회 불러와서 한번 저장해두면 계속써먹는건데 오래걸리는 페칭 반복하게됨
+    그래서 메뉴 state를 홈 컴포넌트에 두지말고 
+    전역스토어에 저장해두고 홈에서는 불러만 오는식으로 성능 개선해야함
+    테이블인포 말고 별도의 슬라이스로
+    */
+  }, [currentCategory]) 
 
   return (
     <>
