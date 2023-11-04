@@ -4,34 +4,53 @@ import { useEffect, useState } from "react"
 import { collection, onSnapshot, query } from "firebase/firestore"
 import { db } from "../firebase"
 import styled from "styled-components"
+import { WrapperStyles } from '../components/commonStyle'
 
 const Wrapper = styled.div`
-  width: 800px;
-  padding: 20px;
+  ${WrapperStyles}
+  /* background-color: #2c173a; */
+`
+const Main = styled.main`
+  width: 60%;
+  height: 80%;
   display: flex;
   flex-wrap: wrap;
-  gap: 40px;
-  border: 2px solid #524f4f;
+  justify-content: space-between;
+  align-content: space-between;
+  background-color: #fff;
+`
+const Article = styled.article`
+  *{box-sizing: border-box;}
+  border: 1px solid #60c6d8;
+  width: 30%;
+  height: 230px;
+`
+const P = styled.p`
+  width: 100%;
+  height: 15%;
+  text-align: center;
+  margin: 0;
 `
 const Box = styled.div`
-  box-sizing: border-box;
-  border: 1px solid #b0e691;
-  width: 200px;
-  height: 200px;
+  width: 100%;
+  height: 70%;
   overflow-y: scroll;
-  position: relative;
   display: flex;
   flex-direction: column;
-  button {
-    position: absolute;
-    bottom: 0;
-    &:first-of-type {right: 0;}
-    &:last-of-type {right: 50px;}
-  }
 `
-const GoBack = styled.button`
-  position: relative;
-  right: -20px;
+const Footer = styled.footer`
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: right;
+  align-items: end;
+  button { 
+    height:80%;   
+    background: transparent;
+    border: none;
+    border-top: 1px solid #60c6d8;
+    border-left: 1px solid #60c6d8; 
+  }
 `
 const Span = styled.span`
   color: ${props => props.isRed ? 'red' : 'green'};
@@ -65,18 +84,22 @@ function OrderStatus() {
 
   return ( 
     <Wrapper>
+      <Main>
       {
         tables.map((table, i) => {
           return (
-            <Box key={i}>
-              { table.map(item => <Item key={i} item={item} />) }
-              <button onClick={()=>navigate(`/${i}/payment`)}>결제</button>
-              <button onClick={()=>navigate(`/${i}/chat`)}>채팅</button>
-            </Box>
+            <Article key={i}>
+              <P>{i+1}번 테이블</P>
+              <Box>{table.map(item => <Item key={i} item={item} />)}</Box>
+              <Footer>
+                <button onClick={()=>navigate(`/${i}/chat`)}>채팅</button>
+                <button onClick={()=>navigate(`/${i}/payment`)}>결제</button>
+              </Footer>
+            </Article>
           )
         })
       }
-      <GoBack onClick={()=>navigate(-1)}>뒤로 가기</GoBack>
+      </Main>
     </Wrapper>
   ) 
 }
