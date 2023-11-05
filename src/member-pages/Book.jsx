@@ -68,8 +68,10 @@ const Item = styled.div`
   p {
     width: 100%;
     height: 20px;
-    ${props => props.coloring && css`color: #74cada;`}
-    ${props => props.coloring && css`font-weight: bold;`}
+    ${props => props.coloring && css`
+      color: #74cada; 
+      font-weight: bold;
+    `}
   }
 `
 

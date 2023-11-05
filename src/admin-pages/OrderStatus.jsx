@@ -62,7 +62,6 @@ function Item({item}) {
 
 function OrderStatus() {
   const navigate = useNavigate()
-  const [tableNumber, setTableNumber] = useState(null)
   const [tables, setTables] = useState([])
 
   useEffect(()=>{

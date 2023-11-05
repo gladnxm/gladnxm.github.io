@@ -1,12 +1,11 @@
-import styled, { css } from "styled-components"
+import { css } from "styled-components"
 
 const WrapperStyles = css` //admin페이지에서 가운데정렬할때 필요한 랩퍼
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box;
 `
 const HeaderStyles = css`
   margin-top: 20px;

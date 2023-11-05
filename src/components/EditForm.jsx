@@ -4,60 +4,61 @@ import { db, storage } from "../firebase";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore"
 import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import styled from "styled-components";
+import { WrapperStyles } from "./commonStyle";
 
-const Form = styled.form`
-  position: fixed;
-  top: 0;
-  left: 0;
+const Wrapper = styled.div`
+  ${WrapperStyles}
+  position: relative;
   width: 100%;
   height: 100%;
-  background-color: #918383;
-  box-sizing: border-box;
-  padding: 20px;
-  z-index: 5;
+  z-index: 10;
+  transform: translateY(-100%);
+  `
+const Form = styled.form`
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  
   label {
     position: absolute;
+    left: 10px;
+    width: 80px;
   }
-  label:nth-child(1) {
-    top: 0px;
-    left: 20px;
-  }
-  label:nth-child(2) {
-    top: 40px;
-    left: 20px;
-  }
-  label:nth-child(3) {
-    top: 80px;
-    left: 20px;
-  }
-  label:nth-child(4) {
-    top: 120px;
-    left: 20px;
-  }
-  label:nth-child(5) {
-    top: 200px;
-    left: 20px;
-  }
+  label:nth-child(1) { top: 0;     }
+  label:nth-child(2) { top: 50px;  }
+  label:nth-child(3) { top: 100px; }
+  label:nth-child(4) { top: 150px; }
+  label:nth-child(5) { top: 200px; }
   label:nth-child(6) {
-    top: 200px;
+    text-align: center;
+    line-height: 2;
+    top: 130px;
+    width: 120px;
+    height: 30px;
+    border: 1px solid red;
     right: 0;
+    left: auto;
   }
   textarea {
-    width: 150px;
-    height: 40px;
+    width: 170px;
+    height: 80px;
     resize: none;
   }
   img {
     position: absolute;
     top: 0;
     right: 0;
-    width: 130px;
+    width: 120px;
   }
   button {
     position: absolute;
-    right: 0;
-    &:first-of-type {bottom: 30px;}
-    &:last-of-type {bottom: 0;}
+    width: 60px;
+    height: 30px;
+    bottom: 60px;
+    background-color: transparent;
+    border: 1px solid #000;
+    &:first-of-type {right: 60px;}
+    &:last-of-type {right: 0;}
   }
   input[type="file"] {
     display: none;
@@ -106,6 +107,7 @@ function EditForm({setEdit, item}) {
   }
 
   return (
+    <Wrapper>
     <Form 
       action="#" 
       className="editform" 
@@ -135,13 +137,6 @@ function EditForm({setEdit, item}) {
           onChange={e=>setAlc(e.target.value)} 
         />
       </label>
-      <label>설명
-        <textarea 
-          name="explanation" 
-          value={explanation} 
-          onChange={e=>setExplanation(e.target.value)}>
-        </textarea>
-      </label>
       <label>카테고리
         <select 
           name="category" 
@@ -155,6 +150,13 @@ function EditForm({setEdit, item}) {
           <option value="dish">안주</option>
         </select>
       </label>
+      <label>설명
+        <textarea 
+          name="explanation" 
+          value={explanation} 
+          onChange={e=>setExplanation(e.target.value)}>
+        </textarea>
+      </label>
       <label>이미지 첨부
         <input 
           type="file" 
@@ -163,11 +165,11 @@ function EditForm({setEdit, item}) {
           onChange={onImageChange}  
         />
       </label>
-
       {img && <img src={img} alt="미리보기" />}
       <button type="button" onClick={()=>setEdit(prev=>!prev)}>취소</button>
       <button type="submit">완료</button>
     </Form>
+    </Wrapper>
   )
 }
 export default EditForm

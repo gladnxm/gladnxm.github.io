@@ -14,14 +14,14 @@ const Wrapper = styled.div`
 const Main = styled.main`
   width: 40%;
   height: 60%;
-  border: 1px solid #b0e691;
-  /* svg:last-child {display:none;} */
+  border: 1px solid #60c6d8;
 `
 const Nav = styled.nav`
   width: 100%;
   height: 15%;
   display: flex;
-  border-bottom: 1px solid red;
+  background-color: #f8f8f8;
+  /* border-bottom: 1px solid red;/// */
   button { 
     width: 70px;
     height: 100%;
@@ -79,13 +79,11 @@ function EditMenu() {
   }
     
   useEffect(()=>{
-    const fetchMenu = async() => {
-      const menuQuery = query(collection(db, currentCategory))
-      const snapshot = await getDocs(menuQuery)
+    (async() => {
+      const snapshot = await getDocs(query(collection(db, currentCategory)))
       const temp = snapshot.docs.map(doc => ({...doc.data(), docID: doc.id}))
       setMenu(temp)
-    }
-    fetchMenu()
+    })()// data fetching
   }, [currentCategory])
 
   return (
@@ -116,19 +114,19 @@ function EditMenu() {
                 className='icon' 
                 icon={faPen}//수정 연필아이콘 
                 onClick={() => modify(item)}
-                />
+              />
               <FontAwesomeIcon 
                 className='icon' 
                 icon={faTrash} //삭제 휴지통아이콘 
                 onClick={() => remove(item)}
-                />
+              />
             </Item>
           )
         })
       }
       </List>      
-    </Main>
     {edit && <EditForm setEdit={setEdit} item={selected} />}
+    </Main>
     </Wrapper>
   )
 }

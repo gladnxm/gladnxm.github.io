@@ -1,15 +1,14 @@
 import { Route, Routes, Link } from 'react-router-dom'
 import Home from './pages/Home'
-import OrderList from './pages/OrderList.jsx';
-import OrderStatus from './admin-pages/OrderStatus.jsx';
 import Cart from './pages/Cart.jsx'
-import EditMenu from './admin-pages/EditMenu.jsx';
-import Book from './member-pages/Book';
-import CreateAccount from './pages/create-account';
 import Chat from './pages/Chat';
-import Payment from './admin-pages/Payment.jsx';
 import Login from './pages/login';
+import CreateAccount from './pages/create-account';
+import OrderList from './pages/OrderList.jsx';
+import Book from './member-pages/Book';
 import Admin from './admin-pages/Admin.jsx';
+import EditMenu from './admin-pages/EditMenu.jsx';
+import Payment from './admin-pages/Payment.jsx';
 
 function App() {
   return (
