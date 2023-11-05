@@ -8,7 +8,6 @@ import { WrapperStyles } from '../components/commonStyle'
 
 const Wrapper = styled.div`
   ${WrapperStyles}
-  /* background-color: #2c173a; */
 `
 const Main = styled.main`
   width: 60%;

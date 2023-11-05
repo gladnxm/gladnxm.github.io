@@ -9,6 +9,7 @@ import CreateAccount from './pages/create-account';
 import Chat from './pages/Chat';
 import Payment from './admin-pages/Payment.jsx';
 import Login from './pages/login';
+import Admin from './admin-pages/Admin.jsx';
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
       <Route path='/:tableNumber/login' element={<Login/>}/>
       <Route path='/:tableNumber/orderList' element={<OrderList/>}/>
       <Route path='/:tableNumber/create-account' element={<CreateAccount/>}/>
-      <Route path='/admin' element={<OrderStatus/>}/>
+      <Route path='/admin' element={<Admin/>}/>
       <Route path='/edit' element={<EditMenu/>}/>
       <Route path='/book' element={<Book/>}/>
     </Routes>

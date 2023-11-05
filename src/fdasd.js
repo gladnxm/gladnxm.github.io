@@ -174,3 +174,63 @@ function handleCartItem(state, action, quantityChange) {
   }
 }
 */
+
+
+
+
+/*
+const AppContainer = styled.div`
+  display: flex;
+  width: 200vw; 페이지1과 페이지2를 나란히 배치하기 위해 2배 너비 
+  transition: transform 0.5s ease;  페이지 전환 애니메이션 설정 
+  transform: translateX(${(props) => (props.currentPage === 'page2' ? '-100vw' : '0')});
+`;
+
+const Page = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background-color: ${(props) => (props.currentPage === 'page1' ? 'lightblue' : 'lightgreen')};
+  transition: background-color 0.5s ease;  배경색 전환 애니메이션 설정 
+`;
+
+const Button = styled.button`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+`;
+
+function App() {
+  const [currentPage, setCurrentPage] = useState('page1');
+
+  const handleRightClick = () => {
+    setCurrentPage('page2');
+  };
+
+  const handleLeftClick = () => {
+    setCurrentPage('page1');
+  };
+
+  return (
+    <div>
+      <Button onClick={handleRightClick} style={{ right: 0 }}>
+        Right
+      </Button>
+      <Button onClick={handleLeftClick} style={{ left: 0 }}>
+        Left
+      </Button>
+      <AppContainer currentPage={currentPage}>
+        <Page currentPage={currentPage}>Page 1</Page>
+        <Page currentPage={currentPage}>Page 2</Page>
+      </AppContainer>
+    </div>
+  );
+}
+*/
