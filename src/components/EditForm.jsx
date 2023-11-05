@@ -24,20 +24,21 @@ const Form = styled.form`
     left: 10px;
     width: 80px;
   }
-  label:nth-child(1) { top: 0;     }
-  label:nth-child(2) { top: 50px;  }
-  label:nth-child(3) { top: 100px; }
-  label:nth-child(4) { top: 150px; }
-  label:nth-child(5) { top: 200px; }
+  label:nth-child(1) { top: 10px;     }
+  label:nth-child(2) { top: 65px;  }
+  label:nth-child(3) { top: 120px; }
+  label:nth-child(4) { top: 175px; }
+  label:nth-child(5) { top: 230px; }
   label:nth-child(6) {
     text-align: center;
     line-height: 2;
     top: 130px;
     width: 120px;
     height: 30px;
-    border: 1px solid red;
+    border: 1px solid #000;
     right: 0;
     left: auto;
+    font-size: 14px;
   }
   textarea {
     width: 170px;
@@ -54,7 +55,7 @@ const Form = styled.form`
     position: absolute;
     width: 60px;
     height: 30px;
-    bottom: 60px;
+    bottom: 30px;
     background-color: transparent;
     border: 1px solid #000;
     &:first-of-type {right: 60px;}

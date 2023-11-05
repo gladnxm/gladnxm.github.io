@@ -21,7 +21,6 @@ const Nav = styled.nav`
   height: 15%;
   display: flex;
   background-color: #f8f8f8;
-  /* border-bottom: 1px solid red;/// */
   button { 
     width: 70px;
     height: 100%;
@@ -65,16 +64,15 @@ function EditMenu() {
     setSelected(null)
     setEdit(prev=>!prev)
   }
-  const modify = async item => {
+  const modify = item => {
     setSelected(item) 
     setEdit(prev=>!prev)
   }
-  const remove = async item => {
+  const remove = item => {
     const ok = confirm("지울거임?")
     if(!ok) return
-    await deleteDoc(doc(db, `${currentCategory}`, item.docID))
-    const photoRef = ref(storage, `${currentCategory}/${item.title}`)
-    await deleteObject(photoRef)
+    deleteDoc( doc(db, `${currentCategory}`, item.docID) )
+    deleteObject( ref(storage, `${currentCategory}/${item.title}`) )
     alert("삭제됨")
   }
     

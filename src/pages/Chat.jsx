@@ -31,6 +31,7 @@ const ChatBox = styled.div`
   flex-direction: column;
   gap: 5px;
   width: 100%;
+  min-height: 20%;
   padding: 10px;
   border: 1px solid #60c6d8;
   @media (min-width: 500px) { height: 300px; }
