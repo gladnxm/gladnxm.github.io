@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { collection, onSnapshot, query } from "firebase/firestore"
 import { db } from "../firebase"
 import styled from "styled-components"
-import { WrapperStyles } from '../components/commonStyle'
+import { WrapperStyles } from '../style'
 
 const Wrapper = styled.div`
   ${WrapperStyles}

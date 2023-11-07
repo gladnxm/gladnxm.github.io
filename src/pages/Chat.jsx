@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { auth, db } from "../firebase"
 import { collection, doc, onSnapshot, query, updateDoc } from "firebase/firestore"
-import { HeaderStyles, WrapperStyles } from "../components/commonStyle";
+import { HeaderStyles, WrapperStyles } from "../style";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 

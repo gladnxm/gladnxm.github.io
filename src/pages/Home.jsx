@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { collection, getDocs, query } from "firebase/firestore"
 import { auth, db } from "../firebase"
 import { addItemToCart } from '../store.js';
@@ -9,12 +9,9 @@ import Detail from '../components/Detail.jsx';
 import styled from 'styled-components';
 import { 
   faCartShopping, 
-  faCartPlus, 
-  faMagnifyingGlass, 
   faList,
   faBook, 
-  faComments, 
-  faInfo,
+  faComments,
   faCircleInfo,
   faBagShopping
 } from '@fortawesome/free-solid-svg-icons';
@@ -22,8 +19,6 @@ import {
 const Nav = styled.nav`
   width: 100%;
   height: 17vh;
-  /* position: sticky;
-  top: 0; */
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -64,8 +59,8 @@ const Item = styled.div`
 const MenuBox = styled.div`
   height: 67vh;  
   overflow-y: scroll;
-  * {    color: #424242;  }
-  div:nth-child(even) {    background-color: #f8f8f8;  }
+  * { color: #424242; }
+  div:nth-child(even) { background-color: #f8f8f8; }
   .icon { font-size: 22px; }
 `
 const Footer = styled.footer`
@@ -73,7 +68,6 @@ const Footer = styled.footer`
   height: 16vh;
   background-color: #EDF0F2;
   display: flex;
-  /* border-bottom: 1px solid #000; */
   button {
     height: 100%;
     background-color: #fff;
@@ -85,26 +79,12 @@ const Footer = styled.footer`
     border: none;
     flex-grow: 1;
     flex-basis: 0;
-    &:nth-child(1) { 
-      color: #d85c5c;
-    }
-    &:nth-child(2) {
-      color: #e6af5d;
-    }
-    &:nth-child(3) {
-      color: #5eca70;
-    }
-    &:nth-child(4) { 
-      color: #70c7bb;
-    }
-    &:first-child { 
-      border-top-left-radius: 40px; 
-    }
-    &:last-child { 
-      border-top-right-radius: 40px; 
-    }
-
-    /* * { color: #b159a9; } */
+    &:nth-child(1) { color: #d85c5c; }
+    &:nth-child(2) { color: #e6af5d; }
+    &:nth-child(3) { color: #5eca70; }
+    &:nth-child(4) { color: #70c7bb; }
+    &:first-child  { border-top-left-radius: 40px; }
+    &:last-child   { border-top-right-radius: 40px; }
     .icon {
       margin-top: 15px;
       font-size: 26px; 
@@ -125,7 +105,6 @@ function Home() {
   const [menu, setMenu] = useState([])
   const [showDetail, setShowDetail] = useState(false)
   const [selected, setSelected] = useState(null) //돋보기 클릭한거. state아닌 일반변수로 하면 작동안함.
-  console.log("홈에서..", auth.currentUser)
 
   useEffect(()=>{
     const fetchMenu = async() => {

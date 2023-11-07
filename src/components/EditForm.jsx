@@ -4,7 +4,7 @@ import { db, storage } from "../firebase";
 import { addDoc, collection, doc, updateDoc } from "firebase/firestore"
 import { deleteObject, getDownloadURL, ref, uploadBytes } from "firebase/storage"
 import styled from "styled-components";
-import { WrapperStyles } from "./commonStyle";
+import { WrapperStyles } from "../style";
 
 const Wrapper = styled.div`
   ${WrapperStyles}
@@ -13,18 +13,17 @@ const Wrapper = styled.div`
   height: 100%;
   z-index: 10;
   transform: translateY(-100%);
-  `
+`
 const Form = styled.form`
   width: 100%;
   height: 100%;
-  background-color: #fff;
-  
+  background-color: #fff;  
   label {
     position: absolute;
     left: 10px;
     width: 80px;
   }
-  label:nth-child(1) { top: 10px;     }
+  label:nth-child(1) { top: 10px;  }
   label:nth-child(2) { top: 65px;  }
   label:nth-child(3) { top: 120px; }
   label:nth-child(4) { top: 175px; }
@@ -61,9 +60,7 @@ const Form = styled.form`
     &:first-of-type {right: 60px;}
     &:last-of-type {right: 0;}
   }
-  input[type="file"] {
-    display: none;
-  }
+  input[type="file"] { display: none; }
 `
 function EditForm({setEdit, item}) {
   const [img, setImg] = useState(item ? item.imgURL : "");

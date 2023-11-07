@@ -2,9 +2,12 @@
 import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
-import { HeaderStyles, OrderListStyles } from "../components/commonStyle";
+import { HeaderStyles, OrderListStyles } from "../style";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const Wrapper = styled.div`
   p { 
@@ -45,7 +48,17 @@ function OrderList() {
   tableNumber = parseInt(tableNumber)
   const navigate = useNavigate()
   const orderList = useSelector(state => state.tableInfo.orderList[tableNumber])
-  
+  const totalAmount = orderList.reduce((acc, cur) => acc + cur.totalPrice, 0)
+
+  useEffect(()=>{
+    const list = orderList.map(item=>`${item.title}:${item.count}:${item.totalPrice}`)
+    updateDoc(
+      doc(db, "TableOrderList", tableNumber),
+      // {list, totalAmount}/
+      {'list':list, 'totalAmount':totalAmount}
+    )
+  },[orderList])
+
   return (
     <Wrapper>   
       <Header>
@@ -60,7 +73,8 @@ function OrderList() {
         <span>가격</span>
       </TableHeader>
       <List>{orderList.map((item, i) => <Item item={item} key={i} />)}</List>      
-      <p>{`합계 : ￦${orderList.reduce((acc, cur) => acc + cur.totalPrice, 0)}`}</p>    
+      {/* <p>{`합계 : ￦${orderList.reduce((acc, cur) => acc + cur.totalPrice, 0)}`}</p>     */}
+      <p>{`합계 : ￦${totalAmount}`}</p>    
     </Wrapper>
   )
 }

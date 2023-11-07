@@ -5,7 +5,7 @@ import styled, {css} from "styled-components"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
-import { HeaderStyles } from "../components/commonStyle";
+import { HeaderStyles } from "../style";
 
 const Wrapper = styled.div`
   width: 100%;

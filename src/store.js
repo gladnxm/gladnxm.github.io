@@ -78,7 +78,7 @@ const tableInfo = createSlice({
       const {tableNumber} = action.payload
       state.orderList[tableNumber] = []
       state.orderStatus[tableNumber] = []
-      // db에서 orderstate, chatting 비우기
+      // db에서 orderstate, chatting 비우고 회원이면 로그아웃 시키기
       updateDoc()
     }
   }

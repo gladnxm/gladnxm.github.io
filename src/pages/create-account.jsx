@@ -2,9 +2,8 @@ import { useState } from "react"
 import { Form } from "../components/auth-components"
 import { useNavigate, useParams } from "react-router-dom"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
-import { addDoc, collection, doc, setDoc } from "firebase/firestore"
+import { doc, setDoc } from "firebase/firestore"
 import { auth, db } from "../firebase"
-import { faL } from "@fortawesome/free-solid-svg-icons"
 
 function CreateAccount() {
   let { tableNumber } = useParams()
@@ -13,6 +12,7 @@ function CreateAccount() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [nickname, setNickname] = useState("")
+
   const onChange = e => {
     const {target:{name,value}} = e;
     ({
@@ -24,8 +24,8 @@ function CreateAccount() {
   const onSubmit = async e => {
     e.preventDefault() 
     const credentions = await createUserWithEmailAndPassword(auth, email, password)
-    await updateProfile(credentions.user, {displayName: nickname})    
-    await setDoc(doc(db, `UserCollection/${credentions.user.uid}`), {
+    updateProfile(credentions.user, {displayName: nickname})    
+    setDoc(doc(db, `UserCollection/${credentions.user.uid}`), {
       cocktail: [],
       whiskey: [],
       wine: [],
@@ -33,7 +33,7 @@ function CreateAccount() {
       dish: [],
     })
     const pointTemplate = Array(3).fill(true)
-    await setDoc(doc(db, `UserPoint/${credentions.user.uid}`), {
+    setDoc(doc(db, `UserPoint/${credentions.user.uid}`), {
       cocktail: [...pointTemplate],
       whiskey: [...pointTemplate],
       wine: [...pointTemplate],

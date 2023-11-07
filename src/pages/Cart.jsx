@@ -9,7 +9,7 @@ import styled from "styled-components"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
 import CartItem from "../components/CartItem.jsx"
-import { HeaderStyles } from "../components/commonStyle.js"
+import { HeaderStyles } from "../style.js"
 
 const Wrapper = styled.div`
 `

@@ -6,7 +6,7 @@ import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import EditForm from "../components/EditForm";
 import { deleteObject, ref } from "firebase/storage";
 import styled from "styled-components";
-import { WrapperStyles } from "../components/commonStyle";
+import { WrapperStyles } from "../style";
 
 const Wrapper = styled.div`
   ${WrapperStyles}

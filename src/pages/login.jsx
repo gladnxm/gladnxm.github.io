@@ -14,11 +14,17 @@ function Login() {
   const onSubmit = async e => {
     e.preventDefault()
     await signInWithEmailAndPassword(auth, email, password) 
+    auth.currentUser.uid === "YRq79gnxhNPtneqJ5khwzvHiXRs1"
+    ? navigate("/admin")
+    : navigate(`/${tableNumber}`)    
+  }
+  const nonMemberAccess = async() => {
+    if(auth.currentUser) await auth.signOut()
     navigate(`/${tableNumber}`)
   }
+  const createAccount = () => navigate(`/${tableNumber}/create-account`)
 
   return (
-    <>
     <Form action="#" onSubmit={onSubmit}>
       <label htmlFor="email">이메일</label>
       <input
@@ -41,11 +47,10 @@ function Login() {
         onChange={e=>setPassword(e.target.value)} 
       />
       <button type='submit'>로그인</button>
-      <button type='button' onClick={()=>navigate(`/${tableNumber}`)}>비회원으로 접속</button>
-      <p onClick={()=>navigate(`/${tableNumber}/create-account`)}>계정이 없다면? 가입하기</p>
+      <button type='button' onClick={nonMemberAccess}>비회원으로 접속</button> 
+      <p onClick={createAccount}>계정이 없다면? 가입하기</p>
       <p>가입하면 어떤 혜택이 있나요?</p>
     </Form>
-    </>
   )
 }
 export default Login
