@@ -84,12 +84,7 @@ function Cart() {
         {'myPoint':havePoint-usedPoint}
       )
       updateCollection()
-    }
-    // updateDoc(
-    //   doc(db, "OrderState", `${tableNumber}`), 
-    //   {'totalAmount': totalAmount- usedPoint}
-    // )
-    
+    }    
     dispatch(addOrderList({ cart: [...cart], tableNumber }))
     setHavePoint(prev=>prev-usedPoint)
     setUsedPoint("")

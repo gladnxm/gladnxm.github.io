@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { auth, db } from "../firebase"
-import { collection, doc, getDoc, onSnapshot, query, updateDoc } from "firebase/firestore"
+import { collection, doc, onSnapshot, query, updateDoc } from "firebase/firestore"
 import { HeaderStyles, WrapperStyles } from "../style";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -89,7 +89,7 @@ function Chat() {
       { list: [...chatting[tableNumber], `${who}:${message}`] }
     )
     setMessage("")
-    if (who === "손님") updateDoc(checkRef, {'on': false})    
+    who === "손님" && updateDoc(checkRef, {'on': false})    
   }
 
   const naming = msg => {    
@@ -117,7 +117,7 @@ function Chat() {
           className="icon" 
           icon={faArrowLeft} 
           onClick={()=>{
-            if (who === "직원") updateDoc(checkRef, {'on': true})
+            who === "직원" && updateDoc(checkRef, {'on': true})
             navigate(-1)
           }} 
         />

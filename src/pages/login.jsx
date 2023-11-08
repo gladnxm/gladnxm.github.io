@@ -1,8 +1,27 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Form } from '../components/auth-components'
+import { Wrapper } from '../components/auth-components'
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { auth } from "../firebase"
+import styled from 'styled-components'
+import { FormStyle } from "../style"
+
+const Form = styled.form`
+  ${FormStyle}
+  & > button {    
+    margin-top: 10px;
+  }  
+  footer {
+    margin-top: 100px;
+    button {
+      width: 50%;
+    }
+  }
+`
+const Footer =styled.footer`
+  display: flex;
+  width: 100%;
+`
 
 function Login() {
   let { tableNumber } = useParams()
@@ -22,9 +41,9 @@ function Login() {
     if(auth.currentUser) await auth.signOut()
     navigate(`/${tableNumber}`)
   }
-  const createAccount = () => navigate(`/${tableNumber}/create-account`)
 
   return (
+    <Wrapper>
     <Form action="#" onSubmit={onSubmit}>
       <label htmlFor="email">이메일</label>
       <input
@@ -47,10 +66,12 @@ function Login() {
         onChange={e=>setPassword(e.target.value)} 
       />
       <button type='submit'>로그인</button>
-      <button type='button' onClick={nonMemberAccess}>비회원으로 접속</button> 
-      <p onClick={createAccount}>계정이 없다면? <button>가입하기</button></p>
-      {/* <p>가입하면 어떤 혜택이 있나요?</p> */}
+      <Footer>
+        <button type='button' onClick={() => navigate(`/${tableNumber}/create-account`)}>회원 가입</button>
+        <button type='button' onClick={nonMemberAccess}>비회원 접속</button> 
+      </Footer>
     </Form>
+    </Wrapper>
   )
 }
 export default Login

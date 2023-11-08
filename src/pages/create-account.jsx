@@ -1,9 +1,19 @@
 import { useState } from "react"
-import { Form } from "../components/auth-components"
+import { Wrapper } from "../components/auth-components"
 import { useNavigate, useParams } from "react-router-dom"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { doc, setDoc } from "firebase/firestore"
 import { auth, db } from "../firebase"
+import styled from "styled-components"
+import { FormStyle } from "../style"
+
+const Form = styled.form`
+  ${FormStyle}
+  button {
+    
+    margin-top: 70px;
+  }  
+`
 
 function CreateAccount() {
   let { tableNumber } = useParams()
@@ -45,6 +55,7 @@ function CreateAccount() {
     navigate(`/${tableNumber}`)
   }
   return (
+    <Wrapper>
     <Form action="#" onSubmit={onSubmit}>
       <label htmlFor="email">이메일</label>
       <input 
@@ -78,6 +89,7 @@ function CreateAccount() {
       />
       <button type="submit">가입하기</button>
     </Form>
+    </Wrapper>
   )
 }
 export default CreateAccount

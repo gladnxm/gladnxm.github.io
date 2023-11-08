@@ -1,15 +1,11 @@
 import styled from "styled-components"
 
-const Form = styled.form`
+const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
-  display: flex;
-  gap: 10px;
-  flex-direction: column;
-`
+  height: 100vh;
+  background-image: url("/background.gif");
+  background-size: cover;
+  position: relative;
+` 
 
-function EmailAndPassword(props) {
-  return
-}
-
-export {Form}
+export {Wrapper}
