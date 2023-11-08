@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react"
-import { collection, onSnapshot, query } from "firebase/firestore"
+import { collection, doc, onSnapshot, query } from "firebase/firestore"
 import { db } from "../firebase"
 import styled from "styled-components"
 import { WrapperStyles } from '../style'
@@ -43,12 +43,16 @@ const Footer = styled.footer`
   display: flex;
   justify-content: right;
   align-items: end;
-  button { 
+  svg, button { 
     height:80%;   
     background: transparent;
     border: none;
     border-top: 1px solid #60c6d8;
     border-left: 1px solid #60c6d8; 
+  }
+  svg {
+    color: orange;
+    border: none;
   }
 `
 const Span = styled.span`
@@ -57,21 +61,35 @@ const Span = styled.span`
 
 function Item({item}) {
   const [isRed, setIsRed] = useState(true)
-  // return <Span isRed={isRed} onClick={()=>setIsRed(prev=>!prev)}>{item}</Span>
-  return <p>d</p>
+  console.log(`${item.title}---${item.count}개`)
+  return <Span isRed={isRed} onClick={()=>setIsRed(prev=>!prev)}>{`${item.title}---${item.count}개`}</Span>
 }
 
 function OrderStatus() {
   const navigate = useNavigate()
   const [tables, setTables] = useState([])
+  const [bell, setBell] = useState([])
 
   useEffect(()=>{
-    let unsubscribe = onSnapshot(
+    let unsubscribe1 = onSnapshot(
       query(collection(db, "OrderState")), 
       snapshot => setTables(snapshot.docs.map(doc => doc.data()['list']))        
     )    
+    let unsubscribe2 = onSnapshot(
+      query(collection(db, "Check")), 
+      snapshot => setBell(snapshot.docs.map(doc => doc.data()['on']))        
+    )    
+    // let unsubscribe2 = onSnapshot(
+    //   query(collection(db, "Chatting")), 
+    //   snapshot => setBell(snapshot.docs.map(doc=>{
+    //     console.log(doc.data(), "hey")
+    //     if("on" in doc.data()) setBell([...(doc.data()["on"])])
+    //   })        
+    // ))
     return () => { 
-      unsubscribe && unsubscribe() 
+      unsubscribe1 && unsubscribe1() 
+      unsubscribe2 && unsubscribe2()
+      //최종으로 잘되면 이거없애고도 해보기 
     }
   }, [])
 
@@ -85,6 +103,12 @@ function OrderStatus() {
               <P>{i+1}번 테이블</P>
               <Box>{table.map(item => <Item key={i} item={item} />)}</Box>
               <Footer>
+                {
+                  bell[i] == false && (
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                  </svg>)
+                }
                 <button onClick={()=>navigate(`/${i}/chat`)}>채팅</button>
                 <button onClick={()=>navigate(`/${i}/payment`)}>결제</button>
               </Footer>

@@ -48,8 +48,8 @@ function Login() {
       />
       <button type='submit'>로그인</button>
       <button type='button' onClick={nonMemberAccess}>비회원으로 접속</button> 
-      <p onClick={createAccount}>계정이 없다면? 가입하기</p>
-      <p>가입하면 어떤 혜택이 있나요?</p>
+      <p onClick={createAccount}>계정이 없다면? <button>가입하기</button></p>
+      {/* <p>가입하면 어떤 혜택이 있나요?</p> */}
     </Form>
   )
 }

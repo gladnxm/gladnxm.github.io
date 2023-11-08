@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components"
 import { auth, db } from "../firebase"
-import { collection, doc, onSnapshot, query, updateDoc } from "firebase/firestore"
+import { collection, doc, getDoc, onSnapshot, query, updateDoc } from "firebase/firestore"
 import { HeaderStyles, WrapperStyles } from "../style";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
@@ -80,15 +80,16 @@ function Chat() {
   tableNumber = parseInt(tableNumber)
   const [chatting, setChatting] = useState(null)
   const [message, setMessage] = useState("")
-  const who = (auth.currentUser?.uid === "749DMpmSITalUBJA7sykxHAFmVY2") ? "직원" : "손님"
+  const who = (auth.currentUser?.uid === "YRq79gnxhNPtneqJ5khwzvHiXRs1") ? "직원" : "손님"
   const navigate = useNavigate()
-
-  const sendMessage = () => {    
+  const checkRef = doc(db, "Check", `${tableNumber}`)
+  const sendMessage = async() => {    
     updateDoc(
       doc(db, "Chatting", `${tableNumber}`),
       { list: [...chatting[tableNumber], `${who}:${message}`] }
     )
     setMessage("")
+    if (who === "손님") updateDoc(checkRef, {'on': false})    
   }
 
   const naming = msg => {    
@@ -115,7 +116,10 @@ function Chat() {
         <FontAwesomeIcon 
           className="icon" 
           icon={faArrowLeft} 
-          onClick={()=>navigate(-1)} 
+          onClick={()=>{
+            if (who === "직원") updateDoc(checkRef, {'on': true})
+            navigate(-1)
+          }} 
         />
         {
           who === "직원"
