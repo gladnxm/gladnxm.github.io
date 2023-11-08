@@ -57,7 +57,8 @@ const Span = styled.span`
 
 function Item({item}) {
   const [isRed, setIsRed] = useState(true)
-  return <Span isRed={isRed} onClick={()=>setIsRed(prev=>!prev)}>{item}</Span>
+  // return <Span isRed={isRed} onClick={()=>setIsRed(prev=>!prev)}>{item}</Span>
+  return <p>d</p>
 }
 
 function OrderStatus() {
@@ -73,12 +74,6 @@ function OrderStatus() {
       unsubscribe && unsubscribe() 
     }
   }, [])
-  // useEffect(()=>{
-  //   onSnapshot(
-  //     query(collection(db, "OrderState")), 
-  //     snapshot => setTables(snapshot.docs.map(doc => doc.data()['list']))        
-  //   )    
-  // }, [])
 
   return ( 
     <Wrapper>

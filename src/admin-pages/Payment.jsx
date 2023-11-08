@@ -24,32 +24,31 @@ function Payment() {
   tableNumber = parseInt(tableNumber)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const orderList = useSelector(state => state.tableInfo.orderList[tableNumber])
+  const [orderList, setOrderList] = useState(null)
   const [totalAmount, setTotalAmount] = useState(0)
 
   useEffect(()=>{
     (async() => {
-      let totalAmount = await getDoc(doc(db, "OrderState", tableNumber))
-      setTotalAmount(totalAmount.totalAmount)
+      let tableOrderList = await getDoc(doc(db, "TableOrderList", `${tableNumber}`))
+      setOrderList(tableOrderList.data()['list'])
+      setTotalAmount(tableOrderList.data()['totalAmount'])
     })()
-    // console.log(totalAmount)
-  },[])
+  }, [])
   const payment = () => {
     const ok = confirm("계산할까요?")
     if(!ok) return
-    dispatch(clearTable({tableNumber}))
+    // dispatch(clearTable({tableNumber}))/
     alert('결제완료됨')
     navigate(-1)
   }
+  if(orderList === null) return <p>로딩중</p>
   return (
     <Wrapper>
       {
         orderList.map((item,i) => {
           return (
             <div key={i}>
-              <span>{item.title}</span>
-              <span>{item.count}</span>
-              {/* <span>{'￦' + item.totalPrice}</span> */}
+              {item}
             </div>
           )
         })

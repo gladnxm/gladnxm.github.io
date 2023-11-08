@@ -82,30 +82,24 @@ function Book() {
   const [userCollection, setUserCollection] = useState(null) // 주문한거 제목모은배열 그회원꺼 통째로, .category로 접근
   const [userPoint, setUserPoint] = useState(null) // 포인트 발급여부배열 그회원꺼 통째로, .category로 접근
   const uid = useRef(auth.currentUser.uid)
-  const guide = `
-  1. 한 번 주문한 메뉴는 도감에 등록됩니다. 
-  2. 다양한 메뉴를 주문해서 개수를 채우고 포인트를 적립하세요
-  3. 다음 주문시 사용하면 할인됩니다.
-  `
+  
   useEffect(()=>{
-    const init = async() => {
+    (async() => {
       let point = await getDoc(doc(db, 'UserPoint', uid.current))
       let collect = await getDoc(doc(db, 'UserCollection', uid.current))
-      console.log("fuck...", collect.data())
+      console.log("oh...", collect.data())
       setUserPoint(point.data())
       setUserCollection(collect.data())
-    }
-    init()
+    })() //init
   }, [])
 
   useEffect(()=>{
-    const fetchMenu = async() => {
+    (async() => {
       const menuQuery = query(collection(db, category))
       const snapshot = await getDocs(menuQuery)
       const menu = snapshot.docs.map(doc => ({title: doc.data().title, imgURL: doc.data().imgURL}))
       setMenu(menu)
-    }
-    fetchMenu()
+    })() // menu fetch
   }, [category])
 
   const earnPoints = async(acc, price, idx) => {

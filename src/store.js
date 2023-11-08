@@ -1,6 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 import { db } from './firebase'
-import { doc, updateDoc } from 'firebase/firestore'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 // 6은 테이블 갯수
 
 function handleCartItem(state, action, quantity) {
@@ -62,24 +62,32 @@ const tableInfo = createSlice({
         else 
           merged[title] = item;        
       })
-
-      //orderState바꾸기 : 이로직 잘되면 밑에 setorede에 넣고 주문하는 페이지에서 setorede추가호출하는 방식으로가자
       cart.forEach(item => state.orderStatus[tableNumber].push(`${item.title} -- ${item.count}개`)) 
       state.cart[tableNumber] = [] // 장바구니 비우기
-      state.orderList[tableNumber] = Object.values(merged) //주문내역 갱신
+      state.orderList[tableNumber] = Object.values(merged)
+      const updatedList = Object.values(merged)
+      console.log(updatedList)
       updateDoc(
         doc(db, "OrderState", `${tableNumber}`),
-        { list: [...state.orderStatus[tableNumber]] }
+        // { list: [...updatedList] }
+        { 'list': updatedList }
+      );
+      
+      const list = state.orderList[tableNumber].map(item=>`${item.title}:${item.count}:${item.totalPrice}`)        
+      const totalAmount = updatedList.reduce((acc, cur) => acc + cur.totalPrice, 0)        
+      updateDoc(
+        doc(db, "TableOrderList", `${tableNumber}`),
+        {'list':list, 'totalAmount': totalAmount}
       )
-      alert("주문완료됨")
+       //주문내역 갱신
+      alert("주문 완료")
     },
     clearTable(state, action) {
       //액션에 테이블번호만 전해주면 알아서 비우게끔
-      const {tableNumber} = action.payload
-      state.orderList[tableNumber] = []
-      state.orderStatus[tableNumber] = []
+      // const {tableNumber} = action.payload
+      // state.orderList[tableNumber] = []
+      // state.orderStatus[tableNumber] = []
       // db에서 orderstate, chatting 비우고 회원이면 로그아웃 시키기
-      updateDoc()
     }
   }
 })

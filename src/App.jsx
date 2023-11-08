@@ -11,6 +11,7 @@ import EditMenu from './admin-pages/EditMenu.jsx';
 import Payment from './admin-pages/Payment.jsx';
 
 function App() {
+  //언마운트시 로그아웃하는 유즈이펙트 만들기
   return (
     <Routes>
       <Route path='/' element={
@@ -20,14 +21,13 @@ function App() {
           <p><Link to='/2/login'>3번테이블 qr</Link></p>
         </>
       } />
-      <Route path='/:tableNumber' element={<Home/>}>
-        <Route path='cart' element={<Cart/>}/>
-        <Route path='chat' element={<Chat/>}/>
-        <Route path='payment' element={<Payment/>}/>
-        <Route path='login' element={<Login/>}/>
-        <Route path='orderList' element={<OrderList/>}/>
-        <Route path='create-account' element={<CreateAccount/>}/>
-      </Route>
+      <Route path='/:tableNumber' element={<Home/>}/>
+      <Route path='/:tableNumber/cart' element={<Cart/>}/>
+      <Route path='/:tableNumber/chat' element={<Chat/>}/>
+      <Route path='/:tableNumber/payment' element={<Payment/>}/>
+      <Route path='/:tableNumber/login' element={<Login/>}/>
+      <Route path='/:tableNumber/orderList' element={<OrderList/>}/>
+      <Route path='/:tableNumber/create-account' element={<CreateAccount/>}/>
       <Route path='/admin' element={<Admin/>}/>
       <Route path='/edit' element={<EditMenu/>}/>
       <Route path='/book' element={<Book/>}/>

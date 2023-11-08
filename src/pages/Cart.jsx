@@ -7,7 +7,7 @@ import { auth, db } from "../firebase.js"
 import { useEffect, useState } from "react"
 import styled from "styled-components"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import CartItem from "../components/CartItem.jsx"
 import { HeaderStyles } from "../style.js"
 
@@ -54,8 +54,7 @@ function Cart() {
     (async()=>{
       if(user === null) return
       let p = await getDoc(doc(db, 'UserPoint', user.uid))
-      p = p.data()['myPoint']
-      setHavePoint(p)
+      setHavePoint(p.data()['myPoint'])
     })()
   }, [])
 
@@ -73,7 +72,7 @@ function Cart() {
     updateDoc(ref, collection)
   }
 
-  const order = () => {
+  const order = async() => {
     if(havePoint < usedPoint) {
       alert("사용하려는 포인트가 보유포인트보다 큽니다.")
       setUsedPoint("")
@@ -86,10 +85,11 @@ function Cart() {
       )
       updateCollection()
     }
-    updateDoc(
-      doc(db, "OrderState", `${tableNumber}`), 
-      {'totalAmount': totalAmount- usedPoint}
-    )
+    // updateDoc(
+    //   doc(db, "OrderState", `${tableNumber}`), 
+    //   {'totalAmount': totalAmount- usedPoint}
+    // )
+    
     dispatch(addOrderList({ cart: [...cart], tableNumber }))
     setHavePoint(prev=>prev-usedPoint)
     setUsedPoint("")
