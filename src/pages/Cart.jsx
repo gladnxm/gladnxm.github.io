@@ -20,8 +20,8 @@ const Header = styled.header`
 const UsePoint = styled.div`
   width: 200px;
   height: 100px;
-  p { margin-bottom: 10px; }
   input { width: 50px; }
+  p { margin-bottom: 10px; }
 `
 const Footer = styled.footer`
   box-sizing: border-box;
@@ -72,7 +72,11 @@ function Cart() {
     updateDoc(ref, collection)
   }
 
-  const order = async() => {
+  const order = () => {
+    if(cart.length <= 0) {
+      alert("장바구니에 담긴 상품이 없어요.")
+      return
+    }
     if(havePoint < usedPoint) {
       alert("사용하려는 포인트가 보유포인트보다 큽니다.")
       setUsedPoint("")
@@ -99,10 +103,7 @@ function Cart() {
         <FontAwesomeIcon className="icon" icon={faArrowLeft} />
       </Header>
       { cart.map((item, i) => <CartItem item={item} tableNumber={tableNumber} key={i} />) }
-      
-      <span className="cart total">
-      
-      </span>     
+         
       {user && (
         <UsePoint>
           <p>보유 포인트 : {havePoint}</p>

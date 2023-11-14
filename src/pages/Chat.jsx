@@ -67,7 +67,6 @@ const Footer = styled.footer`
     width: 35px;
     height: 35px;
     padding: 7px;
-    /* background-color: #9859eb; */
     background-color: #60c6d8;
     color: #fff;
     border-radius: 50%;

@@ -1,6 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 import { db } from './firebase'
-import { doc, getDoc, updateDoc } from 'firebase/firestore'
+import { doc, updateDoc } from 'firebase/firestore'
 // 6은 테이블 갯수
 
 function handleCartItem(state, action, quantity) {
@@ -69,7 +69,6 @@ const tableInfo = createSlice({
       console.log(updatedList)
       updateDoc(
         doc(db, "OrderState", `${tableNumber}`),
-        // { list: [...updatedList] }
         { 'list': updatedList }
       );
       
@@ -83,11 +82,15 @@ const tableInfo = createSlice({
       alert("주문 완료")
     },
     clearTable(state, action) {
-      //액션에 테이블번호만 전해주면 알아서 비우게끔
-      // const {tableNumber} = action.payload
-      // state.orderList[tableNumber] = []
-      // state.orderStatus[tableNumber] = []
-      // db에서 orderstate, chatting 비우고 회원이면 로그아웃 시키기
+      const {tableNumber} = action.payload
+      state.cart[tableNumber] = []
+      state.orderList[tableNumber] = []
+      state.orderStatus[tableNumber] = []
+      updateDoc( doc(db, "Check", `${tableNumber}`), { "on": true } )
+      updateDoc( doc(db, "Chatting", `${tableNumber}`), { "list": [] } )
+      updateDoc( doc(db, "OrderState", `${tableNumber}`), { "list": [] } )
+      updateDoc( doc(db, "TableOrderList", `${tableNumber}`), { "list": [], "totalAmount": 0 } )
+      alert("테이블 초기화")
     }
   }
 })

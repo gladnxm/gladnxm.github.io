@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from "react"
-import { collection, doc, onSnapshot, query } from "firebase/firestore"
+import { collection, onSnapshot, query } from "firebase/firestore"
 import { db } from "../firebase"
 import styled from "styled-components"
 import { WrapperStyles } from '../style'
@@ -78,14 +78,7 @@ function OrderStatus() {
     let unsubscribe2 = onSnapshot(
       query(collection(db, "Check")), 
       snapshot => setBell(snapshot.docs.map(doc => doc.data()['on']))        
-    )    
-    // let unsubscribe2 = onSnapshot(
-    //   query(collection(db, "Chatting")), 
-    //   snapshot => setBell(snapshot.docs.map(doc=>{
-    //     console.log(doc.data(), "hey")
-    //     if("on" in doc.data()) setBell([...(doc.data()["on"])])
-    //   })        
-    // ))
+    ) 
     return () => { 
       unsubscribe1 && unsubscribe1() 
       unsubscribe2 && unsubscribe2()
