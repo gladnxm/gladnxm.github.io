@@ -136,17 +136,17 @@ function Book() {
         <button 
           disabled={!(userCollection[category].length >= 5 && userPoint[category][0])} 
           onClick={()=>earnPoints(5,10000,0)}
-        >5개 : 5000원
+        >5개 : 10000원
         </button>
         <button 
           disabled={!(userCollection[category].length >= 10 && userPoint[category][1])} 
           onClick={()=>earnPoints(10,20000,1)}
-        >10개 : 10000원
+        >10개 : 20000원
         </button>
         <button 
           disabled={!(userCollection[category].length >= 15 && userPoint[category][2])} 
           onClick={()=>earnPoints(15,30000,2)}
-        >15개 : 20000원
+        >15개 : 30000원
         </button>
       </Btns>      
       <Section>

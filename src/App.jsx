@@ -9,7 +9,7 @@ import Book from './member-pages/Book';
 import Admin from './admin-pages/Admin.jsx';
 import EditMenu from './admin-pages/EditMenu.jsx';
 import Payment from './admin-pages/Payment.jsx';
-
+import Sales from './admin-pages/Sales.jsx'
 function App() {
   //언마운트시 로그아웃하는 유즈이펙트 만들기
   return (
@@ -31,6 +31,7 @@ function App() {
       <Route path='/admin' element={<Admin/>}/>
       <Route path='/edit' element={<EditMenu/>}/>
       <Route path='/book' element={<Book/>}/>
+      <Route path='/sales' element={<Sales/>}/>
     </Routes>
   )
 }
