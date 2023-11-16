@@ -95,6 +95,36 @@ const tableInfo = createSlice({
   }
 })
 
+const adminInfo = createSlice({
+  name: 'adminInfo',
+  initialState: {
+    daySales: 0,
+    month: 0,
+    day: 0
+  },
+  reducers: {
+    addSales(state, action) {
+      state.daySales += action.payload
+      updateDoc(
+        doc(db, "Sales", `${state.month}`),
+        {"aaa": state.daySales}
+      )
+    },
+    updateSales(state, action) {
+      updateDoc(
+        doc(db, "Sales", `${state.month}`),
+        {[state.day]: state.daySales}
+      )
+    },
+    setMonth(state, action) {
+      state.month = action.payload
+    },
+    setDay(state, action) {
+      state.day = action.payload
+    }
+  }
+})
+
 export const { 
   addItemToCart, 
   plusCount, 
@@ -104,8 +134,16 @@ export const {
   clearTable
 } = tableInfo.actions
 
+export const { 
+  addSales,
+  updateSales,
+  setMonth,
+  setDay
+} = adminInfo.actions
+
 export default configureStore({
   reducer: { 
-    tableInfo: tableInfo.reducer
+    tableInfo: tableInfo.reducer,
+    adminInfo: adminInfo.reducer
   }
 })

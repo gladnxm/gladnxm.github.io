@@ -19,6 +19,7 @@ function App() {
           <p><Link to='/0/login'>1번테이블의 qr </Link></p>
           <p><Link to='/1/login'>2번테이블 qr </Link></p>
           <p><Link to='/2/login'>3번테이블 qr</Link></p>
+          <p><Link to='/sales'>달력</Link></p>
         </>
       } />
       <Route path='/:tableNumber' element={<Home/>}/>
