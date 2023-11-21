@@ -21,21 +21,20 @@ const Main = styled.main`
   /* border: 1px solid #60c6d8; */
 `
 const Sales = () => {
-  // const [month, setMonth] = useState(11);
-  // const [day, setDay] = useState(16);
   const [monthSales, setMonthSales] = useState(0);
-  // const [daySales, setDaySales] = useState(0);
+  const [daySales, setDaySales] = useState(0);
   const month = useSelector(state => state.adminInfo.month)
   const day = useSelector(state => state.adminInfo.day)
-  const daySales = useSelector(state => state.adminInfo.daySales)
+  // const daySales = useSelector(state => state.adminInfo.daySales)
   const dispatch = useDispatch()
 
   useEffect(()=>{
     (async()=>{
-      let a = await getDoc(doc(db, "Sales", `${month}`))
-      a = a.data()
-      // dispatch(addSales(a[day]))      
-      setMonthSales(Object.values(a).reduce((acc, cur) => acc + cur, 0))
+      const date = new Date()
+      let sales = await getDoc(doc(db, "Sales", `${month}`))
+      sales = sales.data()
+      setDaySales(sales[date.getDate()])
+      setMonthSales(Object.values(sales).reduce((acc, cur) => acc + cur, 0))
     })()
   }, [day, month])
   
@@ -43,7 +42,6 @@ const Sales = () => {
     const selectedMoment = moment(selectedDate)
     dispatch(setMonth(selectedMoment.month() + 1))
     dispatch(setDay(selectedMoment.date()))
-    // dispatch(updateSales())
   };
 
   return (

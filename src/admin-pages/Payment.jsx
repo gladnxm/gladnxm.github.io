@@ -39,7 +39,6 @@ function Payment() {
   tableNumber = parseInt(tableNumber)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  // const sales = useSelector(state => state.adminInfo.daySales)
   const [orderList, setOrderList] = useState(null)
   const [totalAmount, setTotalAmount] = useState(0)
 
@@ -55,8 +54,8 @@ function Payment() {
     const ok = confirm("계산을 마쳤나요?")
     if(!ok) return
     dispatch(clearTable({tableNumber}))
-    dispatch(addSales(totalAmount))
-    // dispatch(updateSales())
+    // dispatch(addSales(totalAmount))
+    dispatch(updateSales(totalAmount))
     alert('테이블 초기화')
     navigate(-1)
   }

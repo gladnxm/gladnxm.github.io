@@ -1,6 +1,6 @@
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 import { db } from './firebase'
-import { doc, updateDoc } from 'firebase/firestore'
+import { doc, setDoc, updateDoc } from 'firebase/firestore'
 // 6은 테이블 갯수
 
 function handleCartItem(state, action, quantity) {
@@ -104,16 +104,17 @@ const adminInfo = createSlice({
   },
   reducers: {
     addSales(state, action) {
-      state.daySales += action.payload
-      updateDoc(
-        doc(db, "Sales", `${state.month}`),
-        {"aaa": state.daySales}
-      )
+      // state.daySales += action.payload
+      // updateDoc(
+      //   doc(db, "Sales", `${state.month}`),
+      //   {"aaa": state.daySales}
+      // )
     },
     updateSales(state, action) {
-      updateDoc(
+      state.daySales += action.payload
+      setDoc(
         doc(db, "Sales", `${state.month}`),
-        {[state.day]: state.daySales}
+        {[`${state.day}`]: state.daySales}
       )
     },
     setMonth(state, action) {

@@ -39,14 +39,15 @@ const Svg = styled.svg`
 
 function Admin() {
   const date = new Date()
-  const [day, setP] = useState(date.getDay());
-  const [month, setPa] = useState(date.getMonth()+1);
+  // const [day, setP] = useState(date.getDay());
+  // const [month, setPa] = useState(date.getMonth()+1);
   const [page, setPage] = useState("page2");
   const dispatch = useDispatch()
 
   useEffect(()=>{
-    dispatch(setMonth(month))
-    dispatch(setDay(day))
+    const date = new Date()
+    dispatch(setMonth(date.getMonth()+1))
+    dispatch(setDay(date.getDate()))
   }, [])
 
   return (
