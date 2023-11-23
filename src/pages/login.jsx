@@ -8,14 +8,10 @@ import { FormStyle } from "../style"
 
 const Form = styled.form`
   ${FormStyle}
-  & > button {    
-    margin-top: 10px;
-  }  
+  & > button { margin-top: 10px; }  
   footer {
     margin-top: 100px;
-    button {
-      width: 50%;
-    }
+    button { width: 50%; }
   }
 `
 const Footer =styled.footer`

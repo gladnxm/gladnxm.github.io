@@ -103,13 +103,6 @@ const adminInfo = createSlice({
     day: 0
   },
   reducers: {
-    addSales(state, action) {
-      // state.daySales += action.payload
-      // updateDoc(
-      //   doc(db, "Sales", `${state.month}`),
-      //   {"aaa": state.daySales}
-      // )
-    },
     updateSales(state, action) {
       state.daySales += action.payload
       setDoc(
@@ -136,7 +129,6 @@ export const {
 } = tableInfo.actions
 
 export const { 
-  addSales,
   updateSales,
   setMonth,
   setDay

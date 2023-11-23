@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import OrderStatus from "./OrderStatus";
 import EditMenu from "./EditMenu";
 import Sales from "./Sales"
-import { setMonth, setDay, addSales, updateSales } from '../store.js'
+import { setMonth, setDay } from '../store.js'
 import { useDispatch } from "react-redux";
 
 const x = page => {
@@ -13,7 +13,6 @@ const x = page => {
     case 'page3': return '-200vw'
   }
 }
-
 const Container = styled.div`
   width: 100%;
   height: 100vh;
@@ -38,9 +37,6 @@ const Svg = styled.svg`
 `
 
 function Admin() {
-  const date = new Date()
-  // const [day, setP] = useState(date.getDay());
-  // const [month, setPa] = useState(date.getMonth()+1);
   const [page, setPage] = useState("page2");
   const dispatch = useDispatch()
 

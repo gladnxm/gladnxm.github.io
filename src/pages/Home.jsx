@@ -191,14 +191,9 @@ function Home() {
         <FontAwesomeIcon className='icon' icon={faBagShopping}/>
         <p>장바구니</p>
       </button>
-       
-      {/* <Link to={`/${tableNumber}/chat`}>채팅 문의</Link>
-      <Link to={`/${tableNumber}/orderList`}>주문 내역</Link>
-      <Link to={`/${tableNumber}/cart`}>장바구니</Link> */}
     </Footer>
     {showDetail && <Detail item={selected} setShowDetail={setShowDetail} />}
     </>
   )
 } 
-
 export default Home

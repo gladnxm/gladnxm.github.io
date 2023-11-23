@@ -9,10 +9,7 @@ import { FormStyle } from "../style"
 
 const Form = styled.form`
   ${FormStyle}
-  button {
-    
-    margin-top: 70px;
-  }  
+  button { margin-top: 70px; }  
 `
 
 function CreateAccount() {

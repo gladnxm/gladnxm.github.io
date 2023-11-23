@@ -7,5 +7,4 @@ const Wrapper = styled.div`
   background-size: cover;
   position: relative;
 ` 
-
 export {Wrapper}

@@ -8,7 +8,7 @@ import { WrapperStyles } from "../style";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { useDispatch, useSelector } from "react-redux";
-import { setMonth, setDay, addSales, updateSales } from '../store.js'
+import { setMonth, setDay } from '../store.js'
 
 const Wrapper = styled.div`
   ${WrapperStyles}
@@ -18,14 +18,12 @@ const Main = styled.main`
   gap: 30px;
   width: 40%;
   height: 50%;
-  /* border: 1px solid #60c6d8; */
 `
 const Sales = () => {
   const [monthSales, setMonthSales] = useState(0);
   const [daySales, setDaySales] = useState(0);
   const month = useSelector(state => state.adminInfo.month)
   const day = useSelector(state => state.adminInfo.day)
-  // const daySales = useSelector(state => state.adminInfo.daySales)
   const dispatch = useDispatch()
 
   useEffect(()=>{
@@ -33,7 +31,7 @@ const Sales = () => {
       const date = new Date()
       let sales = await getDoc(doc(db, "Sales", `${month}`))
       sales = sales.data()
-      setDaySales(sales[date.getDate()])
+      setDaySales(sales[day]) // 여기되는지 검토
       setMonthSales(Object.values(sales).reduce((acc, cur) => acc + cur, 0))
     })()
   }, [day, month])
