@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useDispatch, useSelector } from "react-redux"
-import { useNavigate, useParams } from "react-router-dom"
-import { addOrderList } from '../store.js'
+import { useNavigate } from "react-router-dom"
+import { addOrderList, updateTableOrderList } from '../store.js'
 import { doc, getDoc, updateDoc } from "firebase/firestore"
 import { auth, db } from "../firebase.js"
 import { useEffect, useState } from "react"
@@ -42,16 +42,14 @@ const Footer = styled.footer`
 function Cart() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  let { tableNumber } = useParams()
-  tableNumber = parseInt(tableNumber)
   const user = auth.currentUser || null
-  const cart = useSelector(state => state.tableInfo.cart[tableNumber])
+  const cart = useSelector(state => state.tableInfo.cart)
   const [totalAmount, setTotalAmount] = useState(0)
   const [usedPoint, setUsedPoint] = useState("")
   const [havePoint, setHavePoint] = useState(0)
 
   useEffect(()=>{
-    (async()=>{
+    (async() => {
       if(user === null) return
       let p = await getDoc(doc(db, 'UserPoint', user.uid))
       setHavePoint(p.data()['myPoint'])
@@ -89,8 +87,10 @@ function Cart() {
       )
       updateCollection()
     }    
-    dispatch(addOrderList({ cart: [...cart], tableNumber }))
-    setHavePoint(prev=>prev-usedPoint)
+    dispatch(addOrderList())
+    dispatch(updateTableOrderList())
+    dispatch(setTotalAmount(totalAmount-usedPoint))
+    setHavePoint(prev => prev-usedPoint)
     setUsedPoint("")
     setTotalAmount(0)
   }
@@ -102,7 +102,7 @@ function Cart() {
         <span>장바구니</span>
         <FontAwesomeIcon className="icon" icon={faArrowLeft} />
       </Header>
-      { cart.map((item, i) => <CartItem item={item} tableNumber={tableNumber} key={i} />) }
+      { cart.map((item, i) => <CartItem item={item} key={i} />) }
          
       {user && (
         <UsePoint>

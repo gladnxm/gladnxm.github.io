@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { plusCount, minusCount, removeItem } from '../store.js'
+import { controlQuantity } from '../store.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux"
@@ -45,12 +45,12 @@ const Item = styled.div`
     font-size:22px;
   }
 `
-function CartItem({item, tableNumber}) {
+function CartItem({item}) {
   const dispatch = useDispatch()
   const remove = () => {
     const ok = confirm("항목을 장바구니에서 지울까요?")
     if(!ok) return 
-    dispatch(removeItem({ item, tableNumber }))
+    dispatch(controlQuantity({ item, quantity: null }))
   }
   return (
     <Item>  
@@ -60,13 +60,13 @@ function CartItem({item, tableNumber}) {
 
       <div className="control">
         <svg 
-          onClick={() => dispatch(minusCount({ item, tableNumber }))} 
+          onClick={() => dispatch(controlQuantity({ item, quantity: -1 }))} 
           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
           <path fillRule="evenodd" d="M4 10a.75.75 0 01.75-.75h10.5a.75.75 0 010 1.5H4.75A.75.75 0 014 10z" clipRule="evenodd" />
         </svg>
         <p>{item.count}</p>
         <svg 
-          onClick={() => dispatch(plusCount({ item, tableNumber }))} 
+          onClick={() => dispatch(controlQuantity({ item, quantity: 1 }))} 
           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-5 h-5">
           <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
         </svg>

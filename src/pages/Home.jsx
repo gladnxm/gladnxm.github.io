@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate, useParams } from 'react-router-dom'
 import { collection, getDocs, query } from "firebase/firestore"
 import { auth, db } from "../firebase"
-import { addItemToCart } from '../store.js';
+import { controlQuantity, setTableNumber } from '../store.js';
 import Detail from '../components/Detail.jsx';
 import styled from 'styled-components';
 import { 
@@ -106,14 +106,27 @@ function Home() {
   const [showDetail, setShowDetail] = useState(false)
   const [selected, setSelected] = useState(null) //돋보기 클릭한거. state아닌 일반변수로 하면 작동안함.
 
+  const cartClick = item => {
+    const temp = {
+      title: item.title,
+      alc: item.alc,
+      pricePerPiece: item.price,
+      totalPrice: item.price,
+      category: item.category,
+      count: 1,
+    }
+    dispatch(controlQuantity({item: temp, quantity: 1}))   
+    alert('장바구니에 담겼습니다')
+  }
+
   useEffect(()=>{
-    const fetchMenu = async() => {
+    (async() => { // 디비에서 메뉴 목록 불러오기
       const menuQuery = query(collection(db, currentCategory))
       const snapshot = await getDocs(menuQuery)
       const temp = snapshot.docs.map(doc => doc.data())
       setMenu(temp)
-    }
-    fetchMenu()
+    })()
+    dispatch(setTableNumber(tableNumber))
     /*
     홈에서 메뉴목록 불러오면 마운트될때마다 계속됨
     최초 1회 불러와서 한번 저장해두면 계속써먹는건데 오래걸리는 페칭 반복하게됨
@@ -152,17 +165,7 @@ function Home() {
               <FontAwesomeIcon 
                 className='icon' 
                 icon={faCartShopping} 
-                onClick={()=>{
-                  const temp = {
-                    title: item.title,
-                    alc: item.alc,
-                    pricePerPiece: item.price,
-                    totalPrice: item.price,
-                    category: item.category,
-                    count: 1,
-                  }
-                  dispatch(addItemToCart({item: temp, tableNumber}))                
-                }}
+                onClick={()=>cartClick(item)}
               />
             </Item>
         )

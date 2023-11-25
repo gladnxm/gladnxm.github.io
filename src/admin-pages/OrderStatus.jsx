@@ -59,10 +59,9 @@ const Span = styled.span`
   color: ${props => props.isRed ? 'red' : 'green'};
 `
 
-function Item({item}) {
+function Item({title}) {
   const [isRed, setIsRed] = useState(true)
-  console.log(`${item.title}---${item.count}개`)
-  return <Span isRed={isRed} onClick={()=>setIsRed(prev=>!prev)}>{`${item.title}---${item.count}개`}</Span>
+  return <Span isRed={isRed} onClick={()=>setIsRed(prev=>!prev)}>{title}</Span>
 }
 
 function OrderStatus() {
@@ -78,12 +77,7 @@ function OrderStatus() {
     let unsubscribe2 = onSnapshot(
       query(collection(db, "Check")), 
       snapshot => setBell(snapshot.docs.map(doc => doc.data()['on']))        
-    ) 
-    return () => { 
-      unsubscribe1 && unsubscribe1() 
-      unsubscribe2 && unsubscribe2()
-      //최종으로 잘되면 이거없애고도 해보기 
-    }
+    )
   }, [])
 
   return ( 
@@ -94,7 +88,7 @@ function OrderStatus() {
           return (
             <Article key={i}>
               <P>{i+1}번 테이블</P>
-              <Box>{table.map(item => <Item key={i} item={item} />)}</Box>
+              <Box>{table.map(title => <Item key={i} title={title}/>)}</Box>
               <Footer>
                 {
                   bell[i] == false && (

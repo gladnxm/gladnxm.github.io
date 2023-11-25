@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { useSelector } from "react-redux"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import styled from "styled-components"
 import { HeaderStyles, OrderListStyles } from "../style";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -41,10 +41,10 @@ function Item({item}) {
 }
 
 function OrderList() {
-  let { tableNumber } = useParams()
-  tableNumber = parseInt(tableNumber)
+  // let { tableNumber } = useParams()
+  // tableNumber = parseInt(tableNumber)
   const navigate = useNavigate()
-  const orderList = useSelector(state => state.tableInfo.orderList[tableNumber])
+  const orderList = useSelector(state => state.tableInfo.orderList)
   const totalAmount = orderList.reduce((acc, cur) => acc + cur.totalPrice, 0)
 
   return (
