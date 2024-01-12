@@ -28,7 +28,6 @@ const Sales = () => {
 
   useEffect(()=>{
     (async()=>{
-      const date = new Date()
       let sales = await getDoc(doc(db, "Sales", `${month}`))
       sales = sales.data()
       setDaySales(sales[day]) // 여기되는지 검토
